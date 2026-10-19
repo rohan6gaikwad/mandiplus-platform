@@ -1,0 +1,209 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+  
+  .glass-dark {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .bg-dot-pattern {
+    background-image: radial-gradient(rgba(22, 163, 74, 0.15) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Micro Animations */
+@keyframes pulse-slow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s infinite ease-in-out;
+}
+
+/* Prevent Chrome / Safari Autofill Styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: #0f172a !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Card Flip Animation Classes */
+.perspective-800 {
+  perspective: 800px;
+}
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+.card-inner {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.card-front, .card-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Scanner animation for QR code */
+@keyframes scanner {
+  0%, 100% { top: 0%; }
+  50% { top: 100%; }
+}
+.animate-scanner {
+  animation: scanner 2.5s infinite ease-in-out;
+}
+
+/* Slide in SMS notification */
+@keyframes slide-in {
+  0% { transform: translateY(-50px) scale(0.9); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+.animate-slide-in {
+  animation: slide-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Truck delivery animation */
+@keyframes truck-drive {
+  0% { transform: translateX(-120px); opacity: 0; }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(110vw); opacity: 0; }
+}
+.animate-truck {
+  animation: truck-drive 3.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Road stripe scroll */
+@keyframes road-stripe {
+  0% { background-position: 0 0; }
+  100% { background-position: 200px 0; }
+}
+.animate-road {
+  animation: road-stripe 0.4s linear infinite;
+}
+
+/* Fade in */
+@keyframes fade-in {
+  0% { opacity: 0; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+/* Step slide up */
+@keyframes step-enter {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-step-enter {
+  animation: step-enter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Checkmark pop */
+@keyframes check-pop {
+  0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+  60% { transform: scale(1.15) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.animate-check-pop {
+  animation: check-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Ripple shimmer on card hover */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-hover:hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 0.8s ease forwards;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Google Translate widget customization & hiding */
+.goog-te-banner-frame, 
+.goog-te-banner, 
+.goog-te-menu-value, 
+.goog-te-menu-frame, 
+.goog-te-gadget-icon,
+.goog-te-gadget-simple,
+.skiptranslate,
+iframe[class*="goog-te-banner-frame"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+}
+body {
+  top: 0px !important;
+}
+#google_translate_element {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+}
+

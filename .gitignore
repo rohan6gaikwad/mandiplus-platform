@@ -1,0 +1,62 @@
+# ==============================================================================
+# Mandi+ Platform - Git Ignore Rules
+# ==============================================================================
+
+# Local Maven distribution
+maven/
+
+# Local IDE and operating system files
+.DS_Store
+Thumbs.db
+
+
+# Node Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build & Target Artifacts
+target/
+backend/target/
+dist/
+frontend/dist/
+*.log
+
+# IDE & Editor Configurations
+.vscode/
+.idea/
+*.iml
+modules.xml
+
+# Environment & Secret Configuration Files (Strictly Private / Local-only)
+.env
+.env.*
+.env.local
+.env.*.local
+frontend/.env
+frontend/.env.*
+frontend/.env.local
+frontend/.env.*.local
+!.env.example
+!frontend/.env.example
+
+# Spring Boot Local Property Overrides
+application-local.properties
+application-local.yml
+application-local.yaml
+backend/src/main/resources/application-local.properties
+backend/src/main/resources/application-local.yml
+backend/src/main/resources/application-local.yaml
+
+# Private Keys, Certificates, and Cloud Credentials
+*.pem
+*.key
+*.secret
+*.p12
+*.jks
+*.pfx
+service-account*.json
+credentials*.json
+firebase-adminsdk*.json
+
+.idea/
+maven/
