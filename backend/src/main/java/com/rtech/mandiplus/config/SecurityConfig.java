@@ -93,7 +93,8 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(Arrays.asList(
             "http://localhost:[*]",
             "http://127.0.0.1:[*]",
-            "https://*.onrender.com"
+            "https://*.onrender.com",
+            "https://*.vercel.app"
         ));
         
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
