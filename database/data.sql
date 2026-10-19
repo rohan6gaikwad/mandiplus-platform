@@ -1,7 +1,5 @@
 -- Mandi+ Smart Agriculture Marketplace Seed Data (Maharashtra Focused)
--- Developed by R Tech Solutions
--- Password for default seed users is 'password123' (BCrypt: $2a$10$5FZ8Cc8XyfVmjg/criIM/O/h8y1cg2U4fcUekjhzg0iS9/RDe2pDq)
--- Password for default Administrator is 'admin@gmail.com' (BCrypt: $2a$10$cUWmnXn9CbziBQKZa.p5NO3Bv/DUnNNb4ZETg1sNndRubeqqiTkVq)
+
 
 USE mandiplus_db;
 
