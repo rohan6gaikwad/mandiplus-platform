@@ -338,18 +338,18 @@ export default function DeliveryDashboard({ tab = 'dashboard' }) {
   };
 
   return (
-    <div className="flex h-screen bg-[#fafbfb] overflow-hidden font-sans">
+    <div className="flex min-h-screen bg-[#fafbfb] font-sans relative overflow-x-hidden">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <div className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto">
         <DashboardHeader />
 
-        <div className="p-4 sm:p-8 max-w-7xl mx-auto w-full space-y-6">
+        <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
 
           {/* Blinkit-Style Top Duty Status Bar */}
-          <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-premium flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-premium flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="flex items-center space-x-4">
-              <div className="relative">
+              <div className="relative shrink-0">
                 <div className={`h-12 w-12 rounded-2xl flex items-center justify-center font-bold transition-all ${
                   partner.isOnline ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30' : 'bg-slate-200 text-slate-500'
                 }`}>
@@ -363,9 +363,9 @@ export default function DeliveryDashboard({ tab = 'dashboard' }) {
                 }`}></span>
               </div>
 
-              <div className="text-left">
-                <div className="flex items-center space-x-2">
-                  <h2 className="text-lg font-black text-slate-900 tracking-tight">
+              <div className="text-left min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h2 className="text-lg font-black text-slate-900 tracking-tight truncate">
                     {partner.name}
                   </h2>
                   <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
@@ -374,19 +374,19 @@ export default function DeliveryDashboard({ tab = 'dashboard' }) {
                     {partner.isOnline ? 'ON DUTY (LIVE)' : 'OFF DUTY (PAUSED)'}
                   </span>
                 </div>
-                <div className="flex items-center space-x-3 text-xs text-slate-400 mt-0.5">
-                  <span className="flex items-center"><MapPin className="h-3 w-3 mr-1 text-emerald-600" /> {partner.preferredHub}</span>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-400 mt-0.5">
+                  <span className="flex items-center"><MapPin className="h-3 w-3 mr-1 text-emerald-600 shrink-0" /> {partner.preferredHub}</span>
                   <span>•</span>
-                  <span className="flex items-center"><Star className="h-3 w-3 mr-1 text-amber-500 fill-amber-500" /> {partner.rating} Rating</span>
+                  <span className="flex items-center"><Star className="h-3 w-3 mr-1 text-amber-500 fill-amber-500 shrink-0" /> {partner.rating} Rating</span>
                 </div>
               </div>
             </div>
 
             {/* Quick Actions */}
-            <div className="flex items-center space-x-3 w-full md:w-auto justify-end">
+            <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto justify-start sm:justify-end">
               <button
                 onClick={() => setSosModalOpen(true)}
-                className="bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 transition-colors border border-rose-200"
+                className="bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold px-3.5 sm:px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 transition-colors border border-rose-200"
                 title="Emergency Assistance"
               >
                 <ShieldAlert className="h-4 w-4" />
@@ -395,7 +395,7 @@ export default function DeliveryDashboard({ tab = 'dashboard' }) {
 
               <button
                 onClick={handleToggleDuty}
-                className={`px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center space-x-2 shadow-sm ${
+                className={`px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center space-x-2 shadow-sm ${
                   partner.isOnline 
                     ? 'bg-emerald-600 hover:bg-emerald-700 text-white' 
                     : 'bg-slate-800 hover:bg-slate-900 text-white'
@@ -408,8 +408,8 @@ export default function DeliveryDashboard({ tab = 'dashboard' }) {
           </div>
 
           {/* Quick Metrics Bar */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm text-left">
+          <div className="grid grid-cols-1 min-[360px]:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-100 shadow-sm text-left">
               <div className="flex justify-between items-center text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
                 <span>Today's Earnings</span>
                 <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-600"><IndianRupee className="h-4 w-4" /></div>
@@ -475,7 +475,7 @@ export default function DeliveryDashboard({ tab = 'dashboard' }) {
 
               {/* ACTIVE DELIVERY TRIP CARD */}
               {activeTask ? (
-                <div className="bg-gradient-to-br from-[#143d2c] to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden text-left animate-fade-in">
+                <div className="bg-gradient-to-br from-[#143d2c] to-slate-900 text-white rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl relative overflow-hidden text-left animate-fade-in">
                   <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
                     <Navigation className="h-64 w-64 -mr-16 -mt-16 text-white" />
                   </div>
@@ -776,8 +776,8 @@ export default function DeliveryDashboard({ tab = 'dashboard' }) {
                   You haven't accepted any delivery trips yet. Accept an order from the Command Center!
                 </div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-slate-600">
+                <div className="overflow-x-auto w-full scrollbar-thin">
+                  <table className="w-full min-w-[620px] text-xs text-slate-600">
                     <thead className="bg-slate-50 uppercase text-[10px] text-slate-400 font-bold rounded-xl">
                       <tr>
                         <th className="py-3 px-4 text-left rounded-l-xl">Task Code</th>
@@ -1026,8 +1026,8 @@ export default function DeliveryDashboard({ tab = 'dashboard' }) {
 
       {/* DELIVERY OTP VERIFICATION MODAL */}
       {otpModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl space-y-6 text-left relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl space-y-6 text-left relative">
             <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
               <Key className="h-6 w-6" />
             </div>
@@ -1087,8 +1087,8 @@ export default function DeliveryDashboard({ tab = 'dashboard' }) {
 
       {/* CASHOUT / WITHDRAWAL MODAL */}
       {cashoutModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl space-y-6 text-left relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl space-y-6 text-left relative">
             <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
               <IndianRupee className="h-6 w-6" />
             </div>
@@ -1165,8 +1165,8 @@ export default function DeliveryDashboard({ tab = 'dashboard' }) {
 
       {/* SOS EMERGENCY MODAL */}
       {sosModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl space-y-6 text-left relative border border-rose-100">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl space-y-6 text-left relative border border-rose-100">
             <div className="h-12 w-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center">
               <ShieldAlert className="h-6 w-6 animate-pulse" />
             </div>

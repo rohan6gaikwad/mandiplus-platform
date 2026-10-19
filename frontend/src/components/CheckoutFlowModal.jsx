@@ -716,11 +716,11 @@ export default function CheckoutFlowModal({
 
   /* ── Render ── */
   return (
-    <div className="fixed inset-0 z-[300] bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+    <div className="fixed inset-0 z-[300] bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-fade-in">
       <div className="bg-white rounded-[28px] w-full max-w-lg shadow-2xl border border-slate-100 overflow-hidden flex flex-col max-h-[92vh]">
         
         {/* Header */}
-        <div className="px-8 py-6 border-b border-slate-100 bg-white shrink-0">
+        <div className="px-5 sm:px-8 py-4 sm:py-6 border-b border-slate-100 bg-white shrink-0">
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-lg font-black text-slate-800 tracking-tight">Checkout</h3>
             <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 text-slate-400 transition-colors">
@@ -739,7 +739,7 @@ export default function CheckoutFlowModal({
         </div>
 
         {/* Body */}
-        <div className="flex-1 overflow-y-auto px-8 py-6">
+        <div className="flex-1 overflow-y-auto px-5 sm:px-8 py-4 sm:py-6">
 
           {/* Error banner */}
           {error && (
@@ -1579,7 +1579,7 @@ export default function CheckoutFlowModal({
         </div>
 
         {/* Footer buttons */}
-        <div className="px-8 py-5 border-t border-slate-100 bg-white shrink-0">
+        <div className="px-5 sm:px-8 py-3.5 sm:py-5 border-t border-slate-100 bg-white shrink-0">
           <div className={`flex ${step > 1 ? 'space-x-3' : ''}`}>
             {step > 1 && (
               <button

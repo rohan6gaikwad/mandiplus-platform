@@ -240,7 +240,7 @@ export default function ApplyDeliveryPartner() {
       {/* Main Form Section */}
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 py-12">
         {successData ? (
-          <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-100 shadow-premium text-center space-y-6 animate-fade-in">
+          <div className="bg-white rounded-3xl p-5 sm:p-12 border border-slate-100 shadow-premium text-center space-y-6 animate-fade-in">
             <div className="h-20 w-20 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mx-auto text-emerald-600">
               <CheckCircle2 className="h-10 w-10 animate-bounce" />
             </div>
@@ -294,7 +294,7 @@ export default function ApplyDeliveryPartner() {
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-100 shadow-premium">
+          <div className="bg-white rounded-3xl p-5 sm:p-12 border border-slate-100 shadow-premium">
             {/* Step Progress Tracker */}
             <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-100">
               <div>

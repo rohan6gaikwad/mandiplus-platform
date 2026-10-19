@@ -64,7 +64,7 @@ export default function MandiTicker() {
   if (rates.length === 0) return null;
 
   return (
-    <div className="bg-[#9c5333] text-white py-1.5 overflow-hidden flex whitespace-nowrap border-b border-[#7a4128]">
+    <div className="bg-[#9c5333] text-white py-1.5 w-full max-w-full overflow-hidden flex whitespace-nowrap border-b border-[#7a4128]">
       <div className="animate-marquee flex space-x-12 items-center text-xs font-bold font-sans">
         {[...rates, ...rates, ...rates].map((rate, idx) => (
           <div key={idx} className="flex items-center space-x-2">

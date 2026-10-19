@@ -323,10 +323,10 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
   };
 
   return (
-    <div className="flex bg-[#fafbfb] min-h-screen font-sans">
+    <div className="flex min-h-screen bg-[#fafbfb] font-sans relative overflow-x-hidden">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col overflow-y-auto">
+      <div className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto">
         <DashboardHeader title={
           tab === 'dashboard' ? t('adminPortal') :
           tab === 'users' ? t('usersControl') :
@@ -337,7 +337,7 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
           t('adminPortal')
         } />
 
-        <main className="p-8 max-w-7xl w-full mx-auto space-y-8">
+        <main className="p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6 sm:space-y-8">
           
           {/* TAB 1: SYSTEM STATISTICS DASHBOARD */}
           {tab === 'dashboard' && (
@@ -345,15 +345,15 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
               
               {/* Urgent Action Banner: Pending Crop Approvals */}
               {metrics.pendingProducts > 0 && (
-                <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-3xl p-6 text-white shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-left">
-                  <div className="flex items-center space-x-4">
-                    <div className="h-12 w-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shrink-0">
-                      <AlertCircle className="h-6 w-6 text-white" />
+                <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-white shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-left">
+                  <div className="flex items-center space-x-3 sm:space-x-4">
+                    <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shrink-0">
+                      <AlertCircle className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-extrabold text-base sm:text-lg flex items-center space-x-2">
+                      <h4 className="font-extrabold text-sm sm:text-lg flex flex-wrap items-center gap-1.5 sm:gap-2">
                         <span>{metrics.pendingProducts} Produce Listing(s) Awaiting Review</span>
-                        <span className="bg-white/20 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">Requires Approval</span>
+                        <span className="bg-white/20 text-white text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full">Requires Approval</span>
                       </h4>
                       <p className="text-xs text-amber-100 opacity-90 mt-0.5">
                         Farmers have uploaded crop photos and suggested selling prices. Inspect photos and approve to make crops live to buyers.
@@ -362,7 +362,7 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
                   </div>
                   <Link 
                     to="/admin/products"
-                    className="bg-white text-amber-800 hover:bg-amber-50 font-black text-xs px-5 py-3 rounded-xl transition-all shadow-sm shrink-0 flex items-center space-x-1.5"
+                    className="w-full sm:w-auto justify-center bg-white text-amber-800 hover:bg-amber-50 font-black text-xs px-5 py-3 rounded-xl transition-all shadow-sm shrink-0 flex items-center space-x-1.5"
                   >
                     <span>Inspect & Approve</span>
                     <ArrowRight className="h-4 w-4" />
@@ -371,7 +371,7 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
               )}
 
               {/* Core summary counters */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6">
                 
                 <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
                   <div className="bg-agrogreen-50 text-agrogreen-700 p-3.5 rounded-2xl">
@@ -483,14 +483,14 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
 
           {/* TAB 2: MANAGE USERS */}
           {tab === 'users' && (
-            <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium text-left">
-              <h3 className="text-xl font-bold text-slate-800 mb-6">User Accounts Registry</h3>
+            <div className="bg-white rounded-2xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium text-left">
+              <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-6">User Accounts Registry</h3>
 
               {usersList.length === 0 ? (
                 <p className="text-sm text-slate-400">No user accounts registered.</p>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-slate-500">
+                <div className="overflow-x-auto w-full">
+                  <table className="w-full text-sm text-slate-500 min-w-[580px]">
                     <thead className="text-xs text-slate-400 bg-slate-50 uppercase rounded-xl">
                       <tr>
                         <th className="px-6 py-3.5 rounded-l-xl text-left">User ID</th>
@@ -569,10 +569,10 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
             return (
               <div className="space-y-6 text-left">
                 {/* Header & Quick Stats */}
-                <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium space-y-6">
+                <div className="bg-white rounded-2xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium space-y-6">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                      <h3 className="text-xl font-black text-slate-800 tracking-tight flex items-center space-x-2.5">
+                      <h3 className="text-lg sm:text-xl font-black text-slate-800 tracking-tight flex flex-wrap items-center gap-2">
                         <span>Produce Moderation & Price Approval Desk</span>
                         {pendingCrops.length > 0 && (
                           <span className="bg-amber-100 text-amber-800 text-xs font-black px-2.5 py-0.5 rounded-full animate-pulse">
@@ -658,7 +658,7 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
                 </div>
 
                 {/* Produce Table / Moderation Queue */}
-                <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium">
+                <div className="bg-white rounded-2xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium">
                   {filteredList.length === 0 ? (
                     <div className="py-20 text-center text-slate-400 space-y-3">
                       <ShoppingBag className="h-12 w-12 mx-auto text-slate-200 stroke-[1.5]" />
@@ -668,8 +668,8 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
                       </p>
                     </div>
                   ) : (
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm text-slate-500">
+                    <div className="overflow-x-auto w-full">
+                      <table className="w-full text-sm text-slate-500 min-w-[720px]">
                         <thead className="text-xs text-slate-400 bg-slate-50 uppercase rounded-xl">
                           <tr>
                             <th className="px-5 py-3.5 rounded-l-xl text-left">Harvest Photo</th>
@@ -858,15 +858,15 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
 
           {/* TAB 4: RESOLVE COMPLAINTS */}
           {tab === 'complaints' && (
-            <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium text-left">
-              <h3 className="text-xl font-bold text-slate-800 mb-6">Grievance Resolution Desk</h3>
+            <div className="bg-white rounded-2xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium text-left">
+              <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-6">Grievance Resolution Desk</h3>
 
               {complaintsList.length === 0 ? (
                 <p className="text-sm text-slate-400">No dispute complaints in resolution desk.</p>
               ) : (
                 <div className="space-y-6">
                   {complaintsList.map((comp) => (
-                    <div key={comp.id} className="p-6 border border-slate-100 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-sm transition-shadow">
+                    <div key={comp.id} className="p-4 sm:p-6 border border-slate-100 rounded-2xl sm:rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-sm transition-shadow">
                       <div className="space-y-2">
                         <div className="flex items-center space-x-2.5">
                           <span className="font-bold text-slate-800 text-lg">#COMP-{comp.id}</span>
@@ -918,10 +918,10 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
 
           {/* TAB 6: APMC MANDI PRICE CONTROL DESK */}
           {tab === 'mandi' && (
-            <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium text-left">
-              <div className="flex justify-between items-center mb-6">
+            <div className="bg-white rounded-2xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium text-left">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
                 <div>
-                  <h3 className="text-xl font-bold text-slate-800">{t('mandiDashboard')}</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-800">{t('mandiDashboard')}</h3>
                   <p className="text-xs text-slate-400 mt-1">Configure and manage live APMC Mandi rates populated on the website</p>
                 </div>
                 <button
@@ -936,8 +936,8 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
               {mandiList.length === 0 ? (
                 <p className="text-sm text-slate-400">No APMC Mandi rates listed.</p>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-slate-500">
+                <div className="overflow-x-auto w-full">
+                  <table className="w-full text-sm text-slate-500 min-w-[700px]">
                     <thead className="text-xs text-slate-400 bg-slate-50 uppercase rounded-xl">
                       <tr>
                         <th className="px-6 py-3.5 rounded-l-xl text-left">ID</th>
@@ -994,10 +994,10 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
           {tab === 'deliveries' && (
             <div className="space-y-6 text-left">
               {/* Top Overview Card */}
-              <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium space-y-6">
+              <div className="bg-white rounded-2xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium space-y-6">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div>
-                    <h3 className="text-xl font-black text-slate-800 tracking-tight flex items-center space-x-2.5">
+                    <h3 className="text-lg sm:text-xl font-black text-slate-800 tracking-tight flex flex-wrap items-center gap-2">
                       <Bike className="h-6 w-6 text-emerald-600" />
                       <span>Delivery Logistics & Fleet Oversight</span>
                       {unacceptedDeliveries.length > 0 && (
@@ -1120,10 +1120,10 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
               )}
 
               {/* Full Deliveries Table */}
-              <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium space-y-6">
+              <div className="bg-white rounded-2xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium space-y-6">
                 <div className="flex justify-between items-center">
                   <div>
-                    <h4 className="text-lg font-black text-slate-800 tracking-tight">Consignment Registry</h4>
+                    <h4 className="text-base sm:text-lg font-black text-slate-800 tracking-tight">Consignment Registry</h4>
                     <p className="text-xs text-slate-400">Complete listing of all platform logistics dispatches</p>
                   </div>
                   <button
@@ -1135,8 +1135,8 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
                   </button>
                 </div>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-slate-600">
+                <div className="overflow-x-auto w-full">
+                  <table className="w-full text-xs text-slate-600 min-w-[720px]">
                     <thead className="bg-slate-50 uppercase text-[10px] text-slate-400 font-bold rounded-xl">
                       <tr>
                         <th className="px-4 py-3 text-left rounded-l-xl">Consignment / Order</th>

@@ -154,10 +154,10 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
   };
 
   return (
-    <div className="flex bg-[#fafbfb] min-h-screen font-sans">
+    <div className="flex min-h-screen bg-[#fafbfb] font-sans relative overflow-x-hidden">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col overflow-y-auto">
+      <div className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto">
         <DashboardHeader title={
           tab === 'overview' ? t('coldStorageCommand') :
           tab === 'requests' ? t('bookingSpaceQueue') :
@@ -165,61 +165,61 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
           t('activeWarehousingRecords')
         } />
 
-        <main className="p-8 max-w-7xl w-full mx-auto space-y-8">
+        <main className="p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6 sm:space-y-8">
           
           {/* TAB 1: OVERVIEW & CAPACITY GAUGES */}
           {tab === 'overview' && (
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               
               {/* Capacity Widget Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
-                  <div className="bg-indigo-50 text-indigo-600 p-3.5 rounded-2xl">
+                <div className="bg-white p-4 sm:p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
+                  <div className="bg-indigo-50 text-indigo-600 p-3 sm:p-3.5 rounded-2xl shrink-0">
                     <Warehouse className="h-6 w-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Total Space</span>
-                    <span className="block text-xl font-extrabold text-slate-800">{totalCapacity} Tons</span>
+                    <span className="block text-xl font-extrabold text-slate-800 truncate">{totalCapacity} Tons</span>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
-                  <div className="bg-emerald-50 text-emerald-600 p-3.5 rounded-2xl">
+                <div className="bg-white p-4 sm:p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
+                  <div className="bg-emerald-50 text-emerald-600 p-3 sm:p-3.5 rounded-2xl shrink-0">
                     <Thermometer className="h-6 w-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">IoT Air Temp</span>
-                    <span className="block text-xl font-extrabold text-slate-800">{liveTemp}°C</span>
+                    <span className="block text-xl font-extrabold text-slate-800 truncate">{liveTemp}°C</span>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
-                  <div className="bg-amber-50 text-amber-600 p-3.5 rounded-2xl">
+                <div className="bg-white p-4 sm:p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
+                  <div className="bg-amber-50 text-amber-600 p-3 sm:p-3.5 rounded-2xl shrink-0">
                     <ClipboardList className="h-6 w-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Pending Leases</span>
-                    <span className="block text-xl font-extrabold text-slate-800">{pendingRequests.length} Requests</span>
+                    <span className="block text-xl font-extrabold text-slate-800 truncate">{pendingRequests.length} Requests</span>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
-                  <div className="bg-blue-50 text-blue-600 p-3.5 rounded-2xl">
+                <div className="bg-white p-4 sm:p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
+                  <div className="bg-blue-50 text-blue-600 p-3 sm:p-3.5 rounded-2xl shrink-0">
                     <ShieldCheck className="h-6 w-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Active Leases</span>
-                    <span className="block text-xl font-extrabold text-slate-800">{activeRecords.length} Units</span>
+                    <span className="block text-xl font-extrabold text-slate-800 truncate">{activeRecords.length} Units</span>
                   </div>
                 </div>
 
               </div>
 
               {/* Occupancy gauge analysis */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
                 
-                <div className="lg:col-span-5 bg-white rounded-3xl border border-slate-100 p-8 shadow-sm text-left flex flex-col justify-between min-h-[340px]">
+                <div className="lg:col-span-5 bg-white rounded-3xl border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-sm text-left flex flex-col justify-between min-h-[300px] sm:min-h-[340px]">
                   <div className="space-y-1">
                     <h4 className="font-extrabold text-lg text-slate-800 tracking-tight">Occupancy Gauge</h4>
                     <p className="text-xs text-slate-400">Current spatial volume utilization ratios.</p>
@@ -256,7 +256,7 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
                   <p className="text-xs text-slate-400">Cold Facility: <strong>{facility?.name || 'Sahyadri Mega Cold Storage'}</strong> • Location: <strong>{facility?.location || 'Pimpalgaon, Nashik'}</strong></p>
                 </div>
 
-                <div className="lg:col-span-7 bg-white rounded-3xl border border-slate-100 p-8 shadow-sm text-left">
+                <div className="lg:col-span-7 bg-white rounded-3xl border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-sm text-left">
                   <h4 className="font-extrabold text-lg text-slate-800 tracking-tight mb-6">Recent Leases Booking Requests</h4>
                   
                   {pendingRequests.length === 0 ? (
@@ -264,12 +264,12 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
                   ) : (
                     <div className="space-y-4">
                       {pendingRequests.slice(0, 3).map(req => (
-                        <div key={req.id} className="p-4 border border-slate-100 rounded-2xl flex justify-between items-center hover:bg-slate-50/50">
+                        <div key={req.id} className="p-4 border border-slate-100 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover:bg-slate-50/50">
                           <div>
                             <h5 className="font-bold text-slate-700">{req.farmerName}</h5>
                             <span className="text-[10px] text-slate-400 block mt-0.5">Qty: {req.quantityTons} Tons • Fee: ₹{req.totalPrice}</span>
                           </div>
-                          <div className="flex space-x-2">
+                          <div className="flex space-x-2 self-end sm:self-auto">
                             <button
                               onClick={() => handleBookingAction(req.id, 'APPROVED')}
                               className="bg-emerald-50 text-emerald-600 p-2 rounded-xl border border-emerald-100 hover:bg-emerald-100 transition-colors"
@@ -292,7 +292,7 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
               </div>
 
               {/* Facility Details Management Form */}
-              <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium text-left max-w-3xl">
+              <div className="bg-white rounded-3xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium text-left max-w-3xl">
                 <h3 className="text-xl font-bold text-slate-800 tracking-tight mb-2">Edit Facility Information</h3>
                 <p className="text-xs text-slate-400 mb-6">Modify the pricing, available capacity thresholds, address, and description of this warehouse.</p>
 
@@ -306,8 +306,8 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
                   </div>
                 )}
 
-                <form onSubmit={handleUpdateFacility} className="space-y-5">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form onSubmit={handleUpdateFacility} className="space-y-4 sm:space-y-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div>
                       <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Facility Name</label>
                       <input 
@@ -327,7 +327,7 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div>
                       <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Total Capacity (Tons)</label>
                       <input 
@@ -367,7 +367,7 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
 
                   <button
                     type="submit"
-                    className="bg-indigo-950 hover:bg-indigo-900 text-white font-bold py-3.5 px-6 rounded-xl text-xs transition-colors shadow-sm flex items-center justify-center"
+                    className="bg-indigo-950 hover:bg-indigo-900 text-white font-bold py-3.5 px-6 rounded-xl text-xs transition-colors shadow-sm flex items-center justify-center w-full sm:w-auto"
                   >
                     Save Changes
                   </button>
@@ -379,15 +379,15 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
 
           {/* TAB 2: BOOKING SPACE QUEUE */}
           {tab === 'requests' && (
-            <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium text-left">
+            <div className="bg-white rounded-3xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium text-left">
               <h3 className="text-xl font-bold text-slate-800 mb-6">Pending Space Booking Requests</h3>
 
               {pendingRequests.length === 0 ? (
                 <p className="text-sm text-slate-400">No pending requests are currently in the verification queue.</p>
               ) : (
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   {pendingRequests.map((req) => (
-                    <div key={req.id} className="p-6 border border-slate-100 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-sm transition-shadow">
+                    <div key={req.id} className="p-4 sm:p-6 border border-slate-100 rounded-2xl sm:rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 hover:shadow-sm transition-shadow">
                       <div className="space-y-2">
                         <div className="flex items-center space-x-2.5">
                           <span className="font-bold text-slate-800 text-lg">#BOOK-{req.id}</span>
@@ -414,7 +414,7 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
                         <p className="text-xs text-slate-400">Requested Capacity: <strong>{req.quantityTons} Tons</strong></p>
                       </div>
 
-                      <div className="text-left md:text-right space-y-3 min-w-[200px]">
+                      <div className="text-left md:text-right space-y-3 w-full md:w-auto md:min-w-[200px]">
                         <div>
                           <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">Estimated Revenue</span>
                           <span className="block text-lg font-extrabold text-slate-800">₹{req.totalPrice.toLocaleString('en-IN')}</span>
@@ -444,28 +444,28 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
 
           {/* TAB 3: RECORDS */}
           {tab === 'records' && (
-            <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium text-left">
+            <div className="bg-white rounded-3xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium text-left">
               <h3 className="text-xl font-bold text-slate-800 mb-6">Active Warehousing Records</h3>
 
               {activeRecords.length === 0 ? (
                 <p className="text-sm text-slate-400">No active leases currently stored.</p>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-slate-500">
+                <div className="overflow-x-auto w-full scrollbar-thin">
+                  <table className="w-full text-sm text-slate-500 min-w-[620px]">
                     <thead className="text-xs text-slate-400 bg-slate-50 uppercase rounded-xl">
                       <tr>
-                        <th className="px-6 py-3.5 rounded-l-xl text-left">Lease ID</th>
-                        <th className="px-6 py-3.5 text-left">Farmer</th>
-                        <th className="px-6 py-3.5 text-left">Dates Range</th>
-                        <th className="px-6 py-3.5 text-left">Lease Volume</th>
-                        <th className="px-6 py-3.5 text-right rounded-r-xl">Collected Rent</th>
+                        <th className="px-4 sm:px-6 py-3.5 rounded-l-xl text-left">Lease ID</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-left">Farmer</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-left">Dates Range</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-left">Lease Volume</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-right rounded-r-xl">Collected Rent</th>
                       </tr>
                     </thead>
                     <tbody>
                       {activeRecords.map((rec) => (
                         <tr key={rec.id} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/50">
-                          <td className="px-6 py-4 font-bold text-slate-700">#BOOK-{rec.id}</td>
-                          <td className="px-6 py-4 flex items-center space-x-3">
+                          <td className="px-4 sm:px-6 py-4 font-bold text-slate-700">#BOOK-{rec.id}</td>
+                          <td className="px-4 sm:px-6 py-4 flex items-center space-x-3">
                             {rec.farmerProfilePhoto || rec.buyerProfilePhoto ? (
                               <img 
                                 src={rec.farmerProfilePhoto || rec.buyerProfilePhoto} 
@@ -477,8 +477,8 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
                                 <User className="h-4 w-4" />
                               </div>
                             )}
-                            <div className="text-left">
-                              <span className="font-semibold text-slate-800 block">
+                            <div className="text-left min-w-0">
+                              <span className="font-semibold text-slate-800 block truncate">
                                 {rec.farmerName || rec.buyerName}
                               </span>
                               <span className="text-[10px] text-slate-400 font-medium block">
@@ -486,9 +486,9 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
                               </span>
                             </div>
                           </td>
-                          <td className="px-6 py-4">{rec.startDate} to {rec.endDate}</td>
-                          <td className="px-6 py-4 font-semibold text-slate-800">{rec.quantityTons} Tons</td>
-                          <td className="px-6 py-4 font-extrabold text-slate-800 text-right">₹{rec.totalPrice.toLocaleString('en-IN')}</td>
+                          <td className="px-4 sm:px-6 py-4">{rec.startDate} to {rec.endDate}</td>
+                          <td className="px-4 sm:px-6 py-4 font-semibold text-slate-800">{rec.quantityTons} Tons</td>
+                          <td className="px-4 sm:px-6 py-4 font-extrabold text-slate-800 text-right">₹{rec.totalPrice.toLocaleString('en-IN')}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -508,8 +508,8 @@ export default function ColdStorageDashboard({ tab = 'overview' }) {
 
       {/* Rejection Reason Modal */}
       {rejectingId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl border border-slate-100 text-left space-y-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm animate-fade-in p-4">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 max-w-md w-full shadow-2xl border border-slate-100 text-left space-y-5 sm:space-y-6">
             <div>
               <h3 className="text-lg font-black text-slate-800 tracking-tight">Specify Rejection Reason</h3>
               <p className="text-xs text-slate-400 mt-1">Please provide a clear explanation for rejecting booking request #BOOK-{rejectingId}.</p>

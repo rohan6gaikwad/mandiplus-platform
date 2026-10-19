@@ -88,7 +88,7 @@ export default function ProductDetailModal({
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[200] bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in"
+      className="fixed inset-0 z-[200] bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 animate-fade-in"
       onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
     >
       <div className="bg-white rounded-[28px] w-full max-w-5xl max-h-[92vh] overflow-hidden flex flex-col shadow-2xl border border-slate-100 animate-step-enter">

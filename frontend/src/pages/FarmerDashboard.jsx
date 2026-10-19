@@ -288,10 +288,10 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
   };
 
   return (
-    <div className="flex bg-[#fafbfb] min-h-screen font-sans">
+    <div className="flex min-h-screen bg-[#fafbfb] font-sans relative overflow-x-hidden">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col overflow-y-auto">
+      <div className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto">
         <DashboardHeader title={
           tab === 'dashboard' ? t('farmerCommandCenter') :
           tab === 'add-product' ? t('listCrop') :
@@ -301,59 +301,59 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
           t('complaintsDesk')
         } />
 
-        <main className="p-8 max-w-7xl w-full mx-auto space-y-8">
+        <main className="p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6 sm:space-y-8">
           
           {/* TAB 1: MAIN DASHBOARD OVERVIEW */}
           {tab === 'dashboard' && (
             <>
               {/* Analytics Summary Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
-                  <div className="bg-emerald-50 text-emerald-600 p-3.5 rounded-2xl">
+                <div className="bg-white p-4 sm:p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
+                  <div className="bg-emerald-50 text-emerald-600 p-3 sm:p-3.5 rounded-2xl shrink-0">
                     <IndianRupee className="h-6 w-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Total Earnings</span>
-                    <span className="block text-xl font-extrabold text-slate-800">₹{totalEarnings.toLocaleString('en-IN')}</span>
+                    <span className="block text-xl font-extrabold text-slate-800 truncate">₹{totalEarnings.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
-                  <div className="bg-agrogreen-50 text-agrogreen-700 p-3.5 rounded-2xl">
+                <div className="bg-white p-4 sm:p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
+                  <div className="bg-agrogreen-50 text-agrogreen-700 p-3 sm:p-3.5 rounded-2xl shrink-0">
                     <Leaf className="h-6 w-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Crops Listed</span>
-                    <span className="block text-xl font-extrabold text-slate-800">{products.length} Units</span>
+                    <span className="block text-xl font-extrabold text-slate-800 truncate">{products.length} Units</span>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
-                  <div className="bg-amber-50 text-amber-600 p-3.5 rounded-2xl">
+                <div className="bg-white p-4 sm:p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
+                  <div className="bg-amber-50 text-amber-600 p-3 sm:p-3.5 rounded-2xl shrink-0">
                     <Clock className="h-6 w-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Active Sales</span>
-                    <span className="block text-xl font-extrabold text-slate-800">{pendingOrders.length} Orders</span>
+                    <span className="block text-xl font-extrabold text-slate-800 truncate">{pendingOrders.length} Orders</span>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
-                  <div className="bg-blue-50 text-blue-600 p-3.5 rounded-2xl">
+                <div className="bg-white p-4 sm:p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center space-x-4 text-left">
+                  <div className="bg-blue-50 text-blue-600 p-3 sm:p-3.5 rounded-2xl shrink-0">
                     <Warehouse className="h-6 w-6" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Cold Rooms Booked</span>
-                    <span className="block text-xl font-extrabold text-slate-800">{activeBookings.length} Spaces</span>
+                    <span className="block text-xl font-extrabold text-slate-800 truncate">{activeBookings.length} Spaces</span>
                   </div>
                 </div>
 
               </div>
 
               {/* Weather & Mandi price widgets */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <div className="lg:col-span-8 bg-white rounded-3xl border border-slate-100 p-6 shadow-sm">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+                <div className="lg:col-span-8 bg-white rounded-3xl border border-slate-100 p-4 sm:p-6 shadow-sm">
                   <MandiWidget limit={2} />
                 </div>
                 <div className="lg:col-span-4">
@@ -362,33 +362,33 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
               </div>
 
               {/* Recent Orders table */}
-              <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-sm text-left">
+              <div className="bg-white rounded-3xl border border-slate-100 p-4 sm:p-6 shadow-sm text-left">
                 <h3 className="text-lg font-bold text-slate-800 tracking-tight mb-4">Recent Incoming Orders</h3>
                 
                 {orders.length === 0 ? (
                   <p className="text-xs text-slate-400">No transactions listed yet.</p>
                 ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-slate-500">
+                  <div className="overflow-x-auto w-full scrollbar-thin">
+                    <table className="w-full text-sm text-left text-slate-500 min-w-[620px]">
                       <thead className="text-xs text-slate-400 uppercase bg-slate-50 rounded-xl">
                         <tr>
-                          <th className="px-6 py-3.5 rounded-l-xl">Order ID</th>
-                          <th className="px-6 py-3.5">Produce</th>
-                          <th className="px-6 py-3.5">Quantity</th>
-                          <th className="px-6 py-3.5">Price</th>
-                          <th className="px-6 py-3.5">Buyer Business</th>
-                          <th className="px-6 py-3.5 rounded-r-xl">Status</th>
+                          <th className="px-4 sm:px-6 py-3.5 rounded-l-xl">Order ID</th>
+                          <th className="px-4 sm:px-6 py-3.5">Produce</th>
+                          <th className="px-4 sm:px-6 py-3.5">Quantity</th>
+                          <th className="px-4 sm:px-6 py-3.5">Price</th>
+                          <th className="px-4 sm:px-6 py-3.5">Buyer Business</th>
+                          <th className="px-4 sm:px-6 py-3.5 rounded-r-xl">Status</th>
                         </tr>
                       </thead>
                       <tbody>
                         {orders.slice(0, 5).map((order) => (
                           <tr key={order.id} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/40">
-                            <td className="px-6 py-4 font-bold text-slate-800">#AGR-{order.id}</td>
-                            <td className="px-6 py-4">{order.cropName} ({order.variety})</td>
-                            <td className="px-6 py-4 font-semibold text-slate-800">{(order.quantityQuintals * 100).toLocaleString('en-IN')} kg <span className="text-slate-400 font-normal text-xs">({order.quantityQuintals} qtl)</span></td>
-                            <td className="px-6 py-4 font-semibold text-slate-800">₹{order.totalPrice.toLocaleString('en-IN')}</td>
-                            <td className="px-6 py-4">{order.buyerCompanyName}</td>
-                            <td className="px-6 py-4">
+                            <td className="px-4 sm:px-6 py-4 font-bold text-slate-800">#AGR-{order.id}</td>
+                            <td className="px-4 sm:px-6 py-4">{order.cropName} ({order.variety})</td>
+                            <td className="px-4 sm:px-6 py-4 font-semibold text-slate-800">{(order.quantityQuintals * 100).toLocaleString('en-IN')} kg <span className="text-slate-400 font-normal text-xs">({order.quantityQuintals} qtl)</span></td>
+                            <td className="px-4 sm:px-6 py-4 font-semibold text-slate-800">₹{order.totalPrice.toLocaleString('en-IN')}</td>
+                            <td className="px-4 sm:px-6 py-4">{order.buyerCompanyName}</td>
+                            <td className="px-4 sm:px-6 py-4">
                               <span className={`px-2.5 py-1 text-[10px] font-bold rounded-lg ${
                                 order.status === 'DELIVERED' ? 'bg-emerald-50 text-emerald-600' :
                                 order.status === 'PENDING' ? 'bg-amber-50 text-amber-600' :
@@ -407,10 +407,10 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
 
           {/* TAB 2: ADD & VIEW/EDIT PRODUCTS SIDE-BY-SIDE */}
           {tab === 'add-product' && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-left">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 text-left">
               
               {/* Left Column: Form (Add or Edit) */}
-              <div className="lg:col-span-5 bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium flex flex-col justify-between">
+              <div className="lg:col-span-5 bg-white rounded-3xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium flex flex-col justify-between">
                 <div>
                   <div className="flex items-center space-x-2 text-agrogreen-700 mb-2">
                     <ShieldCheck className="h-5 w-5 text-agrogreen-650" />
@@ -440,7 +440,7 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
 
                   <form onSubmit={handleAddProduce} className="space-y-4">
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
                         <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Crop Name</label>
                         <select
@@ -486,7 +486,7 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
                         <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Quantity (Quintals)</label>
                         <input 
@@ -518,12 +518,12 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
                       />
                     </div>
 
-                    <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl flex items-center justify-between">
+                    <div className="bg-slate-50 border border-slate-100 p-3.5 sm:p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                       <div className="space-y-0.5 text-left">
                         <span className="block text-xs font-bold text-slate-700">Crop Harvest Photo</span>
                         <span className="block text-[9px] text-slate-400">Admin evaluates crop grade & quality from this photo</span>
                       </div>
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-3 shrink-0">
                         {imageUrl ? (
                           <img src={imageUrl} alt="Crop preview" className="h-12 w-12 rounded-xl object-cover border border-slate-200 shadow-sm" />
                         ) : (
@@ -610,7 +610,7 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
               </div>
 
               {/* Right Column: List of Added Products with Moderation Status */}
-              <div className="lg:col-span-7 bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium flex flex-col justify-between">
+              <div className="lg:col-span-7 bg-white rounded-3xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium flex flex-col justify-between">
                 <div>
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                     <div>
@@ -681,8 +681,8 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
                                   : 'border-slate-100 hover:bg-slate-50/30'
                               }`}
                             >
-                              <div className="flex items-start justify-between gap-4">
-                                <div className="flex items-start space-x-3.5">
+                              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                                <div className="flex items-start space-x-3.5 min-w-0 flex-1">
                                   {/* Crop photo preview */}
                                   <div className="h-16 w-16 rounded-2xl bg-white border border-slate-200 overflow-hidden flex items-center justify-center shrink-0 shadow-xs">
                                     {product.imageUrl ? (
@@ -692,9 +692,9 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
                                     )}
                                   </div>
 
-                                  <div className="space-y-1">
+                                  <div className="space-y-1 min-w-0 flex-1">
                                     <div className="flex flex-wrap items-center gap-2">
-                                      <span className="font-extrabold text-slate-850 text-sm">{product.cropName}</span>
+                                      <span className="font-extrabold text-slate-850 text-sm truncate">{product.cropName}</span>
                                       <span className="text-[10px] bg-slate-100 font-bold px-2 py-0.5 rounded-md text-slate-600 uppercase tracking-wider">
                                         {product.variety}
                                       </span>
@@ -739,7 +739,7 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
                                   </div>
                                 </div>
 
-                                <div className="flex items-center space-x-1.5 shrink-0">
+                                <div className="flex items-center space-x-1.5 shrink-0 self-end sm:self-start">
                                   <button
                                     onClick={() => handleStartEdit(product)}
                                     className="p-2 rounded-xl border border-slate-200 hover:bg-white text-slate-600 hover:text-slate-800 transition-colors shadow-xs"
@@ -800,15 +800,15 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
 
           {/* TAB 3: INCOMING ORDERS */}
           {tab === 'orders' && (
-            <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium text-left">
+            <div className="bg-white rounded-3xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium text-left">
               <h3 className="text-xl font-bold text-slate-800 mb-6">Received Sales Orders</h3>
 
               {orders.length === 0 ? (
                 <p className="text-sm text-slate-400">You do not have any incoming crop orders yet.</p>
               ) : (
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   {orders.map((order) => (
-                    <div key={order.id} className="p-6 border border-slate-100 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-sm transition-shadow">
+                    <div key={order.id} className="p-4 sm:p-6 border border-slate-100 rounded-2xl sm:rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 hover:shadow-sm transition-shadow">
                       <div className="space-y-2">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="font-bold text-slate-800 text-lg">#AGR-{order.id}</span>
@@ -848,14 +848,14 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
                         )}
                       </div>
 
-                      <div className="text-left md:text-right space-y-3 min-w-[200px]">
+                      <div className="text-left md:text-right space-y-3 w-full md:w-auto md:min-w-[200px]">
                         <div>
                           <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">Earnings Expected</span>
                           <span className="block text-lg font-extrabold text-slate-800">₹{order.totalPrice.toLocaleString('en-IN')}</span>
                         </div>
 
                         {order.status === 'PENDING' && (
-                          <div className="flex space-x-2.5 justify-start md:justify-end">
+                          <div className="flex flex-wrap gap-2 justify-start md:justify-end">
                             <button
                               onClick={() => {
                                 setApproveOrderId(order.id);
@@ -908,13 +908,13 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
 
           {/* TAB 4: EARNINGS REGISTRY */}
           {tab === 'earnings' && (
-            <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium text-left">
-              <div className="flex justify-between items-center mb-6">
+            <div className="bg-white rounded-3xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium text-left">
+              <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
                 <div>
                   <h3 className="text-xl font-bold text-slate-800">Earnings Registry</h3>
                   <p className="text-xs text-slate-400">Summation of all orders cleared from Escrow accounts</p>
                 </div>
-                <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 font-bold px-4 py-2 rounded-2xl flex items-center space-x-2">
+                <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 font-bold px-4 py-2 rounded-2xl flex items-center space-x-2 self-start sm:self-auto">
                   <IndianRupee className="h-4 w-4" />
                   <span>₹{totalEarnings.toLocaleString('en-IN')} Total</span>
                 </div>
@@ -923,23 +923,23 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
               {orders.filter(o => o.status === 'DELIVERED').length === 0 ? (
                 <p className="text-sm text-slate-400">No completed earnings listed in registry.</p>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-slate-500">
+                <div className="overflow-x-auto w-full scrollbar-thin">
+                  <table className="w-full text-sm text-slate-500 min-w-[580px]">
                     <thead className="text-xs text-slate-400 bg-slate-50 uppercase rounded-xl">
                       <tr>
-                        <th className="px-6 py-3.5 rounded-l-xl text-left">Txn Hash ID</th>
-                        <th className="px-6 py-3.5 text-left">Crops Dispatched</th>
-                        <th className="px-6 py-3.5 text-left">Quantity</th>
-                        <th className="px-6 py-3.5 text-right rounded-r-xl">Cleared Profit</th>
+                        <th className="px-4 sm:px-6 py-3.5 rounded-l-xl text-left">Txn Hash ID</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-left">Crops Dispatched</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-left">Quantity</th>
+                        <th className="px-4 sm:px-6 py-3.5 text-right rounded-r-xl">Cleared Profit</th>
                       </tr>
                     </thead>
                     <tbody>
                       {orders.filter(o => o.status === 'DELIVERED').map((order) => (
                         <tr key={order.id} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/50">
-                          <td className="px-6 py-4 font-bold text-slate-700">#TXN-AGR-{order.id}</td>
-                          <td className="px-6 py-4">{order.cropName} ({order.variety})</td>
-                          <td className="px-6 py-4 font-semibold text-slate-800">{(order.quantityQuintals * 100).toLocaleString('en-IN')} kg <span className="text-slate-400 font-normal text-xs">({order.quantityQuintals} qtl)</span></td>
-                          <td className="px-6 py-4 font-extrabold text-slate-800 text-right">₹{order.totalPrice.toLocaleString('en-IN')}</td>
+                          <td className="px-4 sm:px-6 py-4 font-bold text-slate-700">#TXN-AGR-{order.id}</td>
+                          <td className="px-4 sm:px-6 py-4">{order.cropName} ({order.variety})</td>
+                          <td className="px-4 sm:px-6 py-4 font-semibold text-slate-800">{(order.quantityQuintals * 100).toLocaleString('en-IN')} kg <span className="text-slate-400 font-normal text-xs">({order.quantityQuintals} qtl)</span></td>
+                          <td className="px-4 sm:px-6 py-4 font-extrabold text-slate-800 text-right">₹{order.totalPrice.toLocaleString('en-IN')}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -951,10 +951,10 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
 
           {/* TAB 5: COLD STORAGE BOOKINGS */}
           {tab === 'cold-storage' && (
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               
               {/* Facility book form */}
-              <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium text-left max-w-2xl">
+              <div className="bg-white rounded-3xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium text-left max-w-2xl">
                 <h3 className="text-xl font-bold text-slate-800 mb-6">Reserve Smart Cold Storage</h3>
 
                 {bookingMessage && (
@@ -994,7 +994,7 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Lease Start Date</label>
                       <input 
@@ -1023,15 +1023,15 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
               </div>
 
               {/* Farmer's past bookings */}
-              <div className="bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium text-left">
+              <div className="bg-white rounded-3xl sm:rounded-[32px] border border-slate-100 p-4 sm:p-6 lg:p-8 shadow-premium text-left">
                 <h3 className="text-xl font-bold text-slate-800 mb-6">Your Storage Bookings</h3>
 
                 {bookings.length === 0 ? (
                   <p className="text-sm text-slate-400">No active storage rooms booked yet.</p>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     {bookings.map((book) => (
-                      <div key={book.id} className="p-6 border border-slate-100 rounded-3xl flex flex-col justify-between space-y-4 hover:shadow-sm transition-shadow">
+                      <div key={book.id} className="p-4 sm:p-6 border border-slate-100 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-4 hover:shadow-sm transition-shadow">
                         <div className="space-y-1">
                           <div className="flex justify-between items-center">
                             <span className="font-extrabold text-sm text-slate-800">{book.storageName}</span>
@@ -1083,7 +1083,7 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
       {/* Rejection Confirmation Modal */}
       {rejectConfirmOrderId && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 z-50 text-left">
-          <div className="bg-white rounded-[32px] max-w-md w-full p-8 border border-slate-100 shadow-2xl relative">
+          <div className="bg-white rounded-3xl sm:rounded-[32px] max-w-md w-full p-5 sm:p-8 border border-slate-100 shadow-2xl relative">
             <h3 className="text-xl font-black text-slate-800 tracking-tight mb-2">Reject Order</h3>
             <p className="text-sm text-slate-500 mb-6">Are you sure you want to reject this incoming order? This action will return the reserved crop volume to your active listing inventory and notify the buyer.</p>
 
@@ -1110,7 +1110,7 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
       {/* Approval Confirmation Modal */}
       {approveOrderId && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 z-50 text-left">
-          <div className="bg-white rounded-[32px] max-w-md w-full p-8 border border-slate-100 shadow-2xl relative">
+          <div className="bg-white rounded-3xl sm:rounded-[32px] max-w-md w-full p-5 sm:p-8 border border-slate-100 shadow-2xl relative">
             <h3 className="text-xl font-black text-slate-800 tracking-tight mb-2">Approve Order</h3>
             <p className="text-xs text-slate-400 mb-6">Specify the estimated delivery date to update the buyer with your transit roadmap.</p>
             

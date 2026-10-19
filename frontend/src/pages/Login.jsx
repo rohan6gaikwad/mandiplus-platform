@@ -241,8 +241,8 @@ export default function Login() {
     return (
       <div className="min-h-screen bg-[#fafbfb] flex flex-col font-sans">
         <Navbar />
-        <main className="flex-1 flex items-center justify-center py-16 px-4">
-          <div className="w-full max-w-2xl bg-white rounded-3xl border border-slate-100 p-10 shadow-premium text-center">
+        <main className="flex-1 flex items-center justify-center py-8 sm:py-16 px-4">
+          <div className="w-full max-w-2xl bg-white rounded-3xl border border-slate-100 p-5 sm:p-10 shadow-premium text-center">
             <h2 className="text-3xl font-black text-slate-800 tracking-tight mb-2">{t('selectRole')}</h2>
             <p className="text-slate-500 mb-10">Choose how you want to log in to Mandi+.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -420,7 +420,7 @@ export default function Login() {
       <div className="w-full md:w-1/2 flex flex-col justify-between overflow-y-auto bg-white min-h-screen">
         <div className="p-8 flex justify-end"></div>
 
-        <div className="max-w-md w-full mx-auto px-8 pb-12">
+        <div className="max-w-md w-full mx-auto px-4 sm:px-8 pb-12">
           <button onClick={() => { setRole(null); setEmail(''); setPassword(''); setPhone(''); setOtpSent(false); setError(''); }} className="flex items-center text-xs font-bold text-slate-500 hover:text-slate-800 mb-8 transition-colors">
             <ArrowLeft className="h-4 w-4 mr-1.5" /> Back to Role Selection
           </button>

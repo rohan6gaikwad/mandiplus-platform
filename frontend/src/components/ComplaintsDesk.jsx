@@ -48,9 +48,9 @@ export default function ComplaintsDesk() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-left items-stretch">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 text-left items-stretch">
       {/* Left Column: Submit Dispute Form */}
-      <div className="lg:col-span-5 bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium flex flex-col justify-between hover:border-agrogreen-500/20 transition-all duration-300">
+      <div className="lg:col-span-5 bg-white rounded-[32px] border border-slate-100 p-5 sm:p-8 shadow-premium flex flex-col justify-between hover:border-agrogreen-500/20 transition-all duration-300">
         <div className="space-y-6">
           <div className="space-y-2">
             <span className="inline-flex items-center space-x-2 bg-rose-50 border border-rose-100 rounded-full px-3 py-1 text-[10px] font-bold text-rose-600 tracking-wide uppercase">
@@ -126,7 +126,7 @@ export default function ComplaintsDesk() {
       </div>
 
       {/* Right Column: Dispute History */}
-      <div className="lg:col-span-7 bg-white rounded-[32px] border border-slate-100 p-8 shadow-premium flex flex-col justify-between hover:border-agrogreen-500/20 transition-all duration-300">
+      <div className="lg:col-span-7 bg-white rounded-[32px] border border-slate-100 p-5 sm:p-8 shadow-premium flex flex-col justify-between hover:border-agrogreen-500/20 transition-all duration-300">
         <div className="w-full">
           <div className="flex justify-between items-center mb-6">
             <div>

@@ -134,25 +134,25 @@ export default function PaymentGatewayModal({ isOpen, onClose, onSuccess, amount
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 z-[100] animate-fade-in font-sans">
+    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 z-[100] animate-fade-in font-sans">
       
-      <div className="bg-white rounded-[36px] max-w-lg w-full overflow-hidden border border-slate-100 shadow-2xl relative flex flex-col max-h-[90vh]">
+      <div className="bg-white rounded-[32px] sm:rounded-[36px] max-w-lg w-full overflow-hidden border border-slate-100 shadow-2xl relative flex flex-col max-h-[90vh]">
         
         {/* Header bar */}
-        <div className="bg-gradient-to-r from-agrogreen-950 to-slate-900 text-white px-8 py-6 relative text-left">
+        <div className="bg-gradient-to-r from-agrogreen-950 to-slate-900 text-white px-5 sm:px-8 py-4 sm:py-6 relative text-left">
           <h3 className="text-lg font-black tracking-tight">{t('paymentGateway')}</h3>
           <p className="text-[10px] text-agrogreen-200/80 font-bold uppercase tracking-wider mt-0.5">{t('paymentGatewaySubtitle')}</p>
-          <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center space-x-1.5 bg-white/10 px-3 py-1 rounded-full border border-white/10 backdrop-blur-sm">
+          <div className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 flex items-center space-x-1.5 bg-white/10 px-2.5 sm:px-3 py-1 rounded-full border border-white/10 backdrop-blur-sm">
             <ShieldCheck className="h-4 w-4 text-agrogreen-400" />
             <span className="text-[9px] font-black tracking-wider uppercase">Secure 256-Bit SSL</span>
           </div>
         </div>
 
         {/* Amount Display */}
-        <div className="bg-slate-50 px-8 py-4 border-b border-slate-100 flex justify-between items-center text-left">
+        <div className="bg-slate-50 px-5 sm:px-8 py-3 sm:py-4 border-b border-slate-100 flex justify-between items-center text-left">
           <div>
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{t('paymentAmount')}</span>
-            <span className="block text-2xl font-black text-slate-800">₹{amount.toLocaleString('en-IN')}</span>
+            <span className="block text-xl sm:text-2xl font-black text-slate-800">₹{amount.toLocaleString('en-IN')}</span>
           </div>
           <div className="text-right">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Security</span>
@@ -163,13 +163,13 @@ export default function PaymentGatewayModal({ isOpen, onClose, onSuccess, amount
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-8 text-left scrollbar-thin">
+        <div className="flex-1 overflow-y-auto p-5 sm:p-8 text-left scrollbar-thin">
           
           {/* STEP 1: CHOOSE PAYMENT METHOD (LAUNCH RAZORPAY) */}
           {step === 'choose' && (
             <div className="space-y-6">
               
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex items-start space-x-3.5">
+              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 sm:p-5 flex items-start space-x-3.5">
                 <Info className="h-5 w-5 text-agrogreen-700 shrink-0 mt-0.5" />
                 <div className="space-y-1 text-xs text-slate-600 leading-relaxed">
                   <span className="font-extrabold text-slate-850 block">About Mandi+ Escrow Protection</span>
@@ -188,7 +188,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, onSuccess, amount
 
               <div className="space-y-4">
                 <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">Accepted Payment Methods</span>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 min-[380px]:grid-cols-4 gap-2.5 sm:gap-3">
                   <div className="flex flex-col items-center justify-center p-3.5 rounded-xl border border-slate-100 bg-slate-50/50 text-slate-500">
                     <CreditCard className="h-5 w-5 text-slate-400 mb-1" />
                     <span className="text-[9px] font-bold">Cards</span>

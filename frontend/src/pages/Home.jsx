@@ -90,7 +90,7 @@ export default function Home() {
               </div>
 
               {/* Float Widget 1: Capacity */}
-              <div className="absolute -left-6 bottom-16 bg-white/95 border border-slate-100/80 rounded-2xl p-4 shadow-xl shadow-slate-200/50 backdrop-blur-md max-w-[210px] animate-pulse-slow">
+              <div className="absolute left-2 sm:-left-6 bottom-4 sm:bottom-16 bg-white/95 border border-slate-100/80 rounded-2xl p-3 sm:p-4 shadow-xl shadow-slate-200/50 backdrop-blur-md max-w-[190px] sm:max-w-[210px] animate-pulse-slow">
                 <div className="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1.5">
                   <span>Storage Capacity</span>
                   <span className="text-agrogreen-600">82%</span>

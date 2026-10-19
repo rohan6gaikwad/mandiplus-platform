@@ -197,34 +197,34 @@ export default function AdminMandiManagement() {
   };
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden font-sans">
+    <div className="flex min-h-screen bg-slate-50 font-sans relative overflow-x-hidden">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <div className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto">
         <DashboardHeader title="Government Mandi Price Management & Synchronization" />
 
         <main className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
 
           {/* Top Banner */}
-          <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+          <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 text-white shadow-xl relative overflow-hidden">
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-2 bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md border border-indigo-400/30">
                   <ShieldCheck className="w-4 h-4" />
                   Admin Only Control Desk & Upstream Gateway
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight">
                   Official Mandi Price Sync & Advisory Center
                 </h1>
-                <p className="text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
+                <p className="text-slate-300 text-xs sm:text-sm max-w-2xl leading-relaxed">
                   Monitor official data.gov.in synchronization health, manage verified MSP benchmarks, dispatch farmer advisories, and track forecast accuracy.
                 </p>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
                 <Link
                   to="/farmer/mandi-rates"
-                  className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-2xl text-sm transition-all shadow-md active:scale-95"
+                  className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-2xl text-xs sm:text-sm transition-all shadow-md active:scale-95"
                 >
                   <Eye className="w-4 h-4" />
                   <span>View Farmer Interface</span>
@@ -233,7 +233,7 @@ export default function AdminMandiManagement() {
                 <button
                   onClick={handleTriggerSync}
                   disabled={syncing}
-                  className="inline-flex items-center gap-2 bg-white text-slate-900 hover:bg-slate-100 active:scale-95 font-bold px-4 py-2.5 rounded-2xl text-sm transition-all shadow-md"
+                  className="inline-flex items-center gap-2 bg-white text-slate-900 hover:bg-slate-100 active:scale-95 font-bold px-4 py-2.5 rounded-2xl text-xs sm:text-sm transition-all shadow-md"
                 >
                   <RefreshCw className={`w-4 h-4 text-indigo-600 ${syncing ? 'animate-spin' : ''}`} />
                   <span>{syncing ? 'Syncing...' : 'Trigger Live Sync'}</span>
@@ -268,7 +268,7 @@ export default function AdminMandiManagement() {
           )}
 
           {/* Navigation Tabs */}
-          <div className="flex items-center gap-2 border-b border-slate-200 pb-2 overflow-x-auto">
+          <div className="flex items-center gap-2 border-b border-slate-200 pb-2 overflow-x-auto w-full scrollbar-thin">
             {[
               { id: 'overview', label: 'Overview & Sync Health', icon: Activity },
               { id: 'advisories', label: 'Farmer Advisories', icon: FileText, count: advisories.length },
@@ -464,8 +464,8 @@ export default function AdminMandiManagement() {
               </div>
 
               {advisories.length > 0 ? (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs sm:text-sm font-medium">
+                <div className="overflow-x-auto w-full scrollbar-thin">
+                  <table className="w-full min-w-[620px] text-left text-xs sm:text-sm font-medium">
                     <thead>
                       <tr className="border-b border-slate-200 text-slate-400 text-xs font-bold uppercase tracking-wider">
                         <th className="py-3 px-3">Title & Summary</th>
@@ -553,8 +553,8 @@ export default function AdminMandiManagement() {
               </div>
 
               {mspList.length > 0 ? (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs sm:text-sm font-medium">
+                <div className="overflow-x-auto w-full scrollbar-thin">
+                  <table className="w-full min-w-[620px] text-left text-xs sm:text-sm font-medium">
                     <thead>
                       <tr className="border-b border-slate-200 text-slate-400 text-xs font-bold uppercase tracking-wider">
                         <th className="py-3 px-3">Commodity</th>
@@ -615,8 +615,8 @@ export default function AdminMandiManagement() {
               </div>
 
               {syncLogs.length > 0 ? (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs sm:text-sm font-medium">
+                <div className="overflow-x-auto w-full scrollbar-thin">
+                  <table className="w-full min-w-[760px] text-left text-xs sm:text-sm font-medium">
                     <thead>
                       <tr className="border-b border-slate-200 text-slate-400 text-xs font-bold uppercase tracking-wider">
                         <th className="py-3 px-3">Sync Timestamp</th>
@@ -678,8 +678,8 @@ export default function AdminMandiManagement() {
               </div>
 
               {auditLogs.length > 0 ? (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs sm:text-sm font-medium">
+                <div className="overflow-x-auto w-full scrollbar-thin">
+                  <table className="w-full min-w-[620px] text-left text-xs sm:text-sm font-medium">
                     <thead>
                       <tr className="border-b border-slate-200 text-slate-400 text-xs font-bold uppercase tracking-wider">
                         <th className="py-3 px-3">Timestamp</th>
@@ -715,8 +715,8 @@ export default function AdminMandiManagement() {
 
       {/* MODAL: Publish Advisory */}
       {advisoryModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-100 space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-5 sm:p-6 shadow-2xl border border-slate-100 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <h3 className="font-bold text-slate-900 text-base">Publish Farmer Advisory Bulletin</h3>
               <button onClick={() => setAdvisoryModalOpen(false)} className="text-slate-400 hover:text-slate-600">
@@ -807,8 +807,8 @@ export default function AdminMandiManagement() {
 
       {/* MODAL: Add MSP */}
       {mspModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-100 space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-5 sm:p-6 shadow-2xl border border-slate-100 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <h3 className="font-bold text-slate-900 text-base">Add Verified Government MSP Benchmark</h3>
               <button onClick={() => setMspModalOpen(false)} className="text-slate-400 hover:text-slate-600">

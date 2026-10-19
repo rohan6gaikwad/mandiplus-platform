@@ -279,10 +279,10 @@ export default function BuyerDashboard({ tab = 'shop' }) {
   }, 0);
 
   return (
-    <div className="flex bg-[#fafbfc] min-h-screen font-sans">
+    <div className="flex min-h-screen bg-[#fafbfc] font-sans relative overflow-x-hidden">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col overflow-y-auto">
+      <div className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto">
         <DashboardHeader title={
           tab === 'shop'         ? t('produceMarketplace') :
           tab === 'orders'       ? t('purchasedOrders') :
@@ -293,14 +293,14 @@ export default function BuyerDashboard({ tab = 'shop' }) {
           t('complaintsDesk')
         } />
 
-        <main className="p-6 max-w-7xl w-full mx-auto space-y-6">
+        <main className="p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-5 sm:space-y-6">
 
           {/* ══════════════════ TAB: SHOP ══════════════════ */}
           {tab === 'shop' && (
             <div className="space-y-5">
 
               {/* Search & Filters */}
-              <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm space-y-4">
+              <div className="bg-white rounded-2xl border border-slate-100 p-4 sm:p-5 shadow-sm space-y-4">
                 <div className="flex flex-col md:flex-row gap-3">
                   <div className="relative flex-1">
                     <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
@@ -335,7 +335,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                       {cat === 'ALL' ? 'All' : `${CATEGORY_CHIPS[cat].emoji} ${cat.charAt(0) + cat.slice(1).toLowerCase()}`}
                     </button>
                   ))}
-                  <div className="flex items-center space-x-2 ml-auto">
+                  <div className="flex items-center space-x-2 w-full sm:w-auto sm:ml-auto pt-2 sm:pt-0">
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider whitespace-nowrap">Price ₹:</span>
                     <input type="number" placeholder="Min" value={minPrice} onChange={e => setMinPrice(e.target.value)}
                       className="w-20 px-2.5 py-1.5 rounded-lg border border-slate-100 text-xs bg-slate-50/60 focus:outline-none" />
@@ -355,7 +355,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                 {cart.length > 0 && (
                   <button
                     onClick={handleCartCheckout}
-                    className="flex items-center space-x-2 bg-[#0a2d1e] hover:bg-[#0d3825] text-white px-4 py-2 rounded-xl text-xs font-black transition-all shadow-md shadow-emerald-900/15"
+                    className="flex items-center space-x-2 bg-[#0a2d1e] hover:bg-[#0d3825] text-white px-3 sm:px-4 py-2 rounded-xl text-xs font-black transition-all shadow-md shadow-emerald-900/15"
                   >
                     <ShoppingCart className="h-3.5 w-3.5" />
                     <span>Cart ({cart.length}) · ₹{cartTotal.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span>
@@ -370,7 +370,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                   <p className="text-sm font-medium">No produce matches your filters.</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <div className="grid grid-cols-1 min-[360px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
                   {filteredProducts.map(product => {
                     const isFav = favorites.some(f => f.id === product.id);
                     const cat = getCategoryFromName(product.cropName);
@@ -547,28 +547,28 @@ export default function BuyerDashboard({ tab = 'shop' }) {
 
               {/* Floating Bottom Quick-Commerce Cart Bar (Zepto Style) */}
               {cart.length > 0 && (
-                <div className="fixed bottom-5 left-4 right-4 sm:left-auto sm:right-8 sm:w-[420px] z-40 bg-slate-900/95 backdrop-blur-md text-white rounded-2xl p-2.5 sm:p-3 border border-slate-700/60 shadow-2xl flex items-center justify-between gap-3 animate-fade-in">
-                  <div className="flex items-center space-x-3 min-w-0">
-                    <div className="h-10 w-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 border border-white/10 text-emerald-400 shadow-inner">
-                      <Bike className="h-5 w-5" />
+                <div className="fixed bottom-4 left-3 right-18 sm:left-auto sm:right-24 sm:w-[420px] z-40 bg-slate-900/95 backdrop-blur-md text-white rounded-2xl p-2.5 sm:p-3 border border-slate-700/60 shadow-2xl flex items-center justify-between gap-2 sm:gap-3 animate-fade-in">
+                  <div className="flex items-center space-x-2.5 sm:space-x-3 min-w-0">
+                    <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 border border-white/10 text-emerald-400 shadow-inner">
+                      <Bike className="h-4 w-4 sm:h-5 sm:w-5" />
                     </div>
                     <div className="min-w-0">
-                      <div className="flex items-center space-x-1.5 mb-0.5">
-                        <span className="text-[9px] font-black uppercase tracking-wider text-rose-300 bg-rose-500/20 px-1.5 py-0.5 rounded border border-rose-500/30">Offers</span>
-                        <span className="text-xs font-black text-white truncate">Free Delivery Unlocked</span>
+                      <div className="flex items-center space-x-1 mb-0.5">
+                        <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-rose-300 bg-rose-500/20 px-1 sm:px-1.5 py-0.5 rounded border border-rose-500/30">Offers</span>
+                        <span className="text-[11px] sm:text-xs font-black text-white truncate">Free Delivery</span>
                       </div>
-                      <span className="block text-[11px] text-emerald-400 font-extrabold truncate">
-                        ₹{cartTotal.toLocaleString('en-IN', { maximumFractionDigits: 0 })} · ⚡ 15-Min Farmhouse Delivery
+                      <span className="block text-[10px] sm:text-[11px] text-emerald-400 font-extrabold truncate">
+                        ₹{cartTotal.toLocaleString('en-IN', { maximumFractionDigits: 0 })} · ⚡ 15-Min Delivery
                       </span>
                     </div>
                   </div>
                   <button
                     onClick={() => navigate('/buyer/cart')}
-                    className="bg-rose-600 hover:bg-rose-700 active:scale-95 text-white font-black px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 shadow-lg shadow-rose-900/40 shrink-0 transition-all"
+                    className="bg-rose-600 hover:bg-rose-700 active:scale-95 text-white font-black px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-[11px] sm:text-xs flex items-center space-x-1 sm:space-x-1.5 shadow-lg shadow-rose-900/40 shrink-0 transition-all"
                   >
-                    <ShoppingCart className="h-4 w-4" />
-                    <span>Cart {cart.length} {cart.length === 1 ? 'item' : 'items'}</span>
-                    <ChevronRight className="h-4 w-4" />
+                    <ShoppingCart className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    <span>Cart {cart.length}</span>
+                    <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </button>
                 </div>
               )}
@@ -577,7 +577,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
 
           {/* ══════════════════ TAB: ORDERS ══════════════════ */}
           {tab === 'orders' && (
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm text-left">
+            <div className="bg-white rounded-2xl border border-slate-100 p-4 sm:p-6 shadow-sm text-left">
               <h3 className="text-lg font-black text-slate-800 mb-6 tracking-tight">Purchase History</h3>
               {orders.length === 0 ? (
                 <div className="py-12 text-center">
@@ -587,7 +587,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
               ) : (
                 <div className="space-y-4">
                   {orders.map(order => (
-                    <div key={order.id} className="p-5 border border-slate-100 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-5 hover:shadow-sm transition-all">
+                    <div key={order.id} className="p-4 sm:p-5 border border-slate-100 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-5 hover:shadow-sm transition-all">
                       <div className="space-y-1.5">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="font-black text-slate-800">#AGR-{order.id}</span>
@@ -661,7 +661,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                           </div>
                         )}
                       </div>
-                      <div className="min-w-[160px] space-y-2.5">
+                      <div className="w-full md:w-auto md:min-w-[180px] space-y-2.5">
                         <div>
                           <span className="block text-[10px] text-slate-400 font-black uppercase tracking-wider">Total Paid</span>
                           <span className="block text-lg font-black text-slate-800">₹{Number(order.totalPrice || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
@@ -699,7 +699,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
 
           {/* ══════════════════ TAB: FAVORITES ══════════════════ */}
           {tab === 'favorites' && (
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm text-left">
+            <div className="bg-white rounded-2xl border border-slate-100 p-4 sm:p-6 shadow-sm text-left">
               <h3 className="text-lg font-black text-slate-800 mb-5 tracking-tight">Saved Favorites</h3>
               {favorites.length === 0 ? (
                 <div className="py-12 text-center">
@@ -707,11 +707,11 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                   <p className="text-sm text-slate-400">No favorites saved yet.</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   {favorites.map(product => {
                     const cartItem = cart.find(i => i.id === product.id);
                     return (
-                      <div key={product.id} className="p-4 border border-slate-100 rounded-2xl flex items-center justify-between hover:shadow-sm transition-all">
+                      <div key={product.id} className="p-3.5 sm:p-4 border border-slate-100 rounded-2xl flex items-center justify-between hover:shadow-sm transition-all">
                         <div className="min-w-0 space-y-0.5">
                           <h4 className="font-extrabold text-slate-800 text-sm truncate">{product.cropName}</h4>
                           <span className="text-[10px] text-slate-400 font-semibold block">{product.variety} · {product.location}</span>
@@ -820,7 +820,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                   </div>
 
                   {/* Cart Items List */}
-                  <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm space-y-4">
+                  <div className="bg-white rounded-2xl border border-slate-100 p-4 sm:p-6 shadow-sm space-y-4">
                     <div className="flex justify-between items-center border-b border-slate-100 pb-4">
                       <div>
                         <h3 className="text-lg font-black text-slate-800 tracking-tight">{t('shoppingCart')}</h3>
@@ -852,7 +852,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                           const total = rate * item.cartQty;
                           const mrpRate = rate * 1.15;
                           return (
-                            <div key={item.id} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
+                            <div key={item.id} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 group">
                               
                               {/* Left: Thumbnail + Title */}
                               <div className="flex items-center space-x-3.5 min-w-0">
@@ -879,7 +879,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                               </div>
 
                               {/* Right: Zepto Stepper + Unit Toggle + Item Total */}
-                              <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+                              <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2 sm:gap-3 shrink-0">
                                 
                                 {/* Unit selector pill */}
                                 <div className="flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200">
@@ -982,7 +982,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                 </div>
 
                 {/* Right Column: Checkout Summary Panel */}
-                <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm space-y-5">
+                <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-100 p-4 sm:p-6 shadow-sm space-y-5">
                   <h3 className="text-base font-black text-slate-800 tracking-tight">Order Summary</h3>
 
                   <div className="space-y-2.5 text-sm">
@@ -1036,7 +1036,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
           {tab === 'cold-storage' && (
             <div className="space-y-6">
 
-              <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm text-left max-w-2xl">
+              <div className="bg-white rounded-2xl border border-slate-100 p-4 sm:p-6 shadow-sm text-left max-w-2xl">
                 <h3 className="text-lg font-black text-slate-800 mb-5 tracking-tight">Reserve Cold Storage</h3>
 
                 {bookingMessage && (
@@ -1066,7 +1066,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                     <input type="number" required placeholder="e.g. 10" value={bookingQty} onChange={e => setBookingQty(e.target.value)}
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none text-sm" />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
                       <label className="block text-xs font-black text-slate-500 uppercase tracking-wider mb-2">Start Date</label>
                       <input type="date" required value={startDate} onChange={e => setStartDate(e.target.value)}
@@ -1084,14 +1084,14 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                 </form>
               </div>
 
-              <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm text-left">
+              <div className="bg-white rounded-2xl border border-slate-100 p-4 sm:p-6 shadow-sm text-left">
                 <h3 className="text-lg font-black text-slate-800 mb-5 tracking-tight">Your Bookings</h3>
                 {bookings.length === 0 ? (
                   <p className="text-sm text-slate-400">No bookings yet.</p>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                     {bookings.map(b => (
-                      <div key={b.id} className="p-5 border border-slate-100 rounded-2xl space-y-3 hover:shadow-sm transition-shadow">
+                      <div key={b.id} className="p-4 sm:p-5 border border-slate-100 rounded-2xl space-y-3 hover:shadow-sm transition-shadow">
                         <div className="flex justify-between items-center">
                           <span className="font-black text-sm text-slate-800">{b.storageName}</span>
                           <span className={`px-2.5 py-1 text-[9px] font-black rounded-lg ${
@@ -1131,8 +1131,8 @@ export default function BuyerDashboard({ tab = 'shop' }) {
           {tab === 'payments' && (
             <div className="space-y-6 text-left">
               {/* Header stats row */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm space-y-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                <div className="bg-white rounded-2xl border border-slate-100 p-4 sm:p-5 shadow-sm space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Total Volume Paid</span>
                     <CreditCard className="h-4 w-4 text-emerald-600" />
@@ -1149,7 +1149,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                   </span>
                 </div>
 
-                <div className="bg-gradient-to-br from-[#f0fdf4] to-emerald-50/50 rounded-2xl border border-emerald-100 p-5 shadow-sm space-y-1">
+                <div className="bg-gradient-to-br from-[#f0fdf4] to-emerald-50/50 rounded-2xl border border-emerald-100 p-4 sm:p-5 shadow-sm space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-black text-emerald-800 uppercase tracking-wider">Active Escrow Reserves</span>
                     <ShieldCheck className="h-4 w-4 text-emerald-600" />
@@ -1166,7 +1166,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                   </span>
                 </div>
 
-                <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm space-y-1">
+                <div className="bg-white rounded-2xl border border-slate-100 p-4 sm:p-5 shadow-sm space-y-1 sm:col-span-2 lg:col-span-1">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Transactions Count</span>
                     <Package className="h-4 w-4 text-slate-400" />
@@ -1181,7 +1181,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
               </div>
 
               {/* Escrow assurance note */}
-              <div className="bg-emerald-950 text-white rounded-2xl p-5 flex items-start space-x-3.5 shadow-sm">
+              <div className="bg-emerald-950 text-white rounded-2xl p-4 sm:p-5 flex items-start space-x-3.5 shadow-sm">
                 <ShieldCheck className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
                 <div className="space-y-1 text-xs">
                   <span className="font-extrabold text-white text-sm block">Razorpay Real-Time Escrow Guarantee</span>
@@ -1193,7 +1193,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
 
               {/* Payments table / cards */}
               <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+                <div className="p-4 sm:p-6 border-b border-slate-100 flex justify-between items-center">
                   <div>
                     <h3 className="text-lg font-black text-slate-800 tracking-tight">Payment Transactions</h3>
                     <p className="text-xs text-slate-400 font-medium">Real-time ledger synchronized with Razorpay webhooks</p>
@@ -1212,7 +1212,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                 ) : (
                   <div className="divide-y divide-slate-100">
                     {payments.map(payment => (
-                      <div key={payment.id} className="p-6 hover:bg-slate-50/50 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      <div key={payment.id} className="p-4 sm:p-6 hover:bg-slate-50/50 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="space-y-1.5 min-w-0">
                           <div className="flex flex-wrap items-center gap-2">
                             <span className="font-mono text-xs font-black text-slate-850">

@@ -261,10 +261,10 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="flex bg-[#fafbfb] min-h-screen font-sans">
+    <div className="flex bg-[#fafbfb] min-h-screen font-sans relative overflow-x-hidden">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <div className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto">
         <DashboardHeader title="Your Account" />
 
         <main className="p-4 sm:p-6 lg:p-8 max-w-3xl w-full mx-auto space-y-5 text-left">
@@ -732,8 +732,8 @@ export default function ProfilePage() {
           MODAL: ADDRESS BOOK (Matching Screenshot 2)
          ══════════════════════════════════════════════════════════════════ */}
       {activeModal === 'address_book' && (
-        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl border border-slate-150 overflow-hidden flex flex-col max-h-[85vh] animate-step-enter text-left">
+        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl border border-slate-150 overflow-hidden flex flex-col max-h-[90vh] animate-step-enter text-left">
             <div className="p-4 border-b border-slate-100 flex items-center justify-between">
               <h3 className="font-black text-slate-900 text-base">Select delivery location</h3>
               <button onClick={() => setActiveModal(null)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100">
@@ -810,8 +810,8 @@ export default function ProfilePage() {
           MODAL: MANDIPLUS MONEY WALLET (Screenshot 3)
          ══════════════════════════════════════════════════════════════════ */}
       {activeModal === 'wallet' && (
-        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-slate-150 overflow-hidden animate-step-enter text-left">
+        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-3xl w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-150 overflow-hidden animate-step-enter text-left">
             <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-amber-50 to-yellow-50">
               <div className="flex items-center space-x-2.5">
                 <Banknote className="h-5 w-5 text-amber-600" />
@@ -865,8 +865,8 @@ export default function ProfilePage() {
           MODAL: GST DETAILS (Screenshot 3 & 4)
          ══════════════════════════════════════════════════════════════════ */}
       {activeModal === 'gst' && (
-        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-slate-150 overflow-hidden animate-step-enter text-left">
+        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-3xl w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-150 overflow-hidden animate-step-enter text-left">
             <div className="p-4 border-b border-slate-100 flex items-center justify-between">
               <h3 className="font-black text-slate-900 text-base">GST Tax Details</h3>
               <button onClick={() => setActiveModal(null)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100">
@@ -922,8 +922,8 @@ export default function ProfilePage() {
           MODAL: BIRTHDAY CELEBRATION (Screenshot 3)
          ══════════════════════════════════════════════════════════════════ */}
       {activeModal === 'birthday' && (
-        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-sm shadow-2xl border border-slate-150 overflow-hidden animate-step-enter text-center p-6 space-y-4">
+        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-3xl w-full max-w-sm max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-150 overflow-hidden animate-step-enter text-center p-5 sm:p-6 space-y-4">
             <div className="text-5xl select-none animate-bounce">🎂</div>
             <h3 className="font-black text-slate-900 text-lg">Your Birthday Treats</h3>
             <p className="text-xs text-slate-500">
@@ -953,8 +953,8 @@ export default function ProfilePage() {
           MODAL: BOOKMARKED RECIPES
          ══════════════════════════════════════════════════════════════════ */}
       {activeModal === 'recipes' && (
-        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-slate-150 overflow-hidden animate-step-enter text-left">
+        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-3xl w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-150 overflow-hidden animate-step-enter text-left">
             <div className="p-4 border-b border-slate-100 flex items-center justify-between">
               <h3 className="font-black text-slate-900 text-base">Farm-to-Table Recipes</h3>
               <button onClick={() => setActiveModal(null)} className="p-1 rounded-lg text-slate-400 hover:bg-slate-100">
@@ -984,8 +984,8 @@ export default function ProfilePage() {
           MODAL: SUPPORT DESK & 24/7 WHATSAPP
          ══════════════════════════════════════════════════════════════════ */}
       {activeModal === 'support' && (
-        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-sm shadow-2xl border border-slate-150 overflow-hidden animate-step-enter text-center p-6 space-y-4">
+        <div className="fixed inset-0 z-[500] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-3xl w-full max-w-sm max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-150 overflow-hidden animate-step-enter text-center p-5 sm:p-6 space-y-4">
             <div className="h-12 w-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto text-2xl font-bold">
               💬
             </div>

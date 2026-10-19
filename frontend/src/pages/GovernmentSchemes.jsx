@@ -102,12 +102,12 @@ export default function GovernmentSchemes() {
 
   if (user) {
     return (
-      <div className="flex bg-[#fafbfb] min-h-screen font-sans">
+      <div className="flex bg-[#fafbfb] min-h-screen font-sans relative overflow-x-hidden">
         <Sidebar />
-        <div className="flex-1 flex flex-col overflow-y-auto">
+        <div className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto">
           <DashboardHeader title={t('govtSchemes')} />
-          <main className="flex-1 p-8 bg-[#fafbfb] space-y-8">
-            <div className="bg-slate-900 rounded-[32px] p-8 text-white relative overflow-hidden shadow-premium">
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-[#fafbfb] space-y-6 sm:space-y-8">
+            <div className="bg-slate-900 rounded-[32px] p-5 sm:p-8 text-white relative overflow-hidden shadow-premium">
               <div className="absolute inset-0 bg-[radial-gradient(#16a34a_1.2px,transparent_0)] [background-size:24px_24px] opacity-10"></div>
               <div className="relative z-10 text-left space-y-2">
                 <span className="inline-flex items-center space-x-2 bg-agrogreen-500/20 border border-agrogreen-500/30 rounded-full px-3 py-1 text-[10px] font-bold text-agrogreen-400 tracking-wide uppercase">

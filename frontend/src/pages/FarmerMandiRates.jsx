@@ -269,27 +269,27 @@ export default function FarmerMandiRates() {
   };
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden font-sans">
+    <div className="flex min-h-screen bg-slate-50 font-sans relative overflow-x-hidden">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <div className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto">
         <DashboardHeader title="Government Mandi Price Advisor" />
 
         <main className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
 
           {/* Header Banner */}
-          <div className="bg-gradient-to-r from-emerald-900 via-agrogreen-900 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+          <div className="bg-gradient-to-r from-emerald-900 via-agrogreen-900 to-slate-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-white shadow-xl relative overflow-hidden">
             <div className="absolute right-0 top-0 bottom-0 w-96 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-emerald-500/20 via-transparent to-transparent pointer-events-none" />
-            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
               <div className="space-y-2">
-                <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md border border-emerald-400/30">
-                  <ShieldCheck className="w-4 h-4" />
-                  Official data.gov.in Agmarknet Portal Data
+                <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-emerald-500/20 text-emerald-300 px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold backdrop-blur-md border border-emerald-400/30 max-w-full">
+                  <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+                  <span className="truncate">Official data.gov.in Agmarknet Portal Data</span>
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight">
                   Official Mandi Rates & Selling Advisory
                 </h1>
-                <p className="text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
+                <p className="text-slate-300 text-xs sm:text-sm lg:text-base max-w-2xl leading-relaxed">
                   Real-time APMC arrivals, verified Minimum Support Prices (MSP), and transparent statistical price suggestions to empower farmers with maximum realization.
                 </p>
               </div>
@@ -298,7 +298,7 @@ export default function FarmerMandiRates() {
                 <button
                   onClick={fetchAdviceAndData}
                   disabled={loading}
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-medium px-4 py-2.5 rounded-2xl text-sm backdrop-blur-sm border border-white/20 transition-all shadow-sm"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-medium px-4 py-2.5 rounded-2xl text-xs sm:text-sm backdrop-blur-sm border border-white/20 transition-all shadow-sm"
                   title="Refresh Official Rates"
                 >
                   <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -700,8 +700,8 @@ export default function FarmerMandiRates() {
             </div>
 
             {nearbyMarkets.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs sm:text-sm font-medium">
+              <div className="overflow-x-auto w-full">
+                <table className="w-full text-left text-xs sm:text-sm font-medium min-w-[620px]">
                   <thead>
                     <tr className="border-b border-slate-200 text-slate-400 text-xs font-bold uppercase tracking-wider">
                       <th className="py-3 px-3">Mandi / Yard</th>

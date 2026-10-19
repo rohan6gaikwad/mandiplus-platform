@@ -1,18 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import { useSidebar } from '../context/SidebarContext';
 import LanguageSelector from './LanguageSelector';
-import { LogOut, User, Bell, CheckCircle, Shield, Sparkles, MessageSquare } from 'lucide-react';
+import { LogOut, User, Bell, CheckCircle, Shield, Sparkles, MessageSquare, Menu } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import MandiTicker from './MandiTicker';
 
 export default function DashboardHeader({ title }) {
   const { user, logout, alerts, wsConnected } = useAuth();
   const { t } = useLanguage();
+  const { toggleSidebar } = useSidebar();
   const [showNotifications, setShowNotifications] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-
 
   const handleLogout = () => {
     logout();
@@ -54,25 +55,39 @@ export default function DashboardHeader({ title }) {
       {/* Live Mandi Ticker on Top of Dashboard */}
       <MandiTicker />
       
-      <header className="bg-white border-b border-slate-100 h-20 px-4 sm:px-8 flex items-center justify-between font-sans relative z-40">
-        <div className="min-w-0 flex-1 mr-3 sm:mr-6 text-left">
-          <h1 className="text-2xl font-bold text-slate-800 tracking-tight truncate">{title}</h1>
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-0.5">
-            <p className="text-xs text-slate-400 whitespace-nowrap hidden md:inline-block">Mandi+ Portal • Smart Farming Marketplace</p>
-            <span className="h-1.5 w-1.5 rounded-full bg-slate-200 hidden md:inline-block"></span>
-            <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider flex items-center whitespace-nowrap">
-              Region: Maharashtra
-            </span>
+      <header className="bg-white border-b border-slate-100 h-16 sm:h-20 px-3 sm:px-6 lg:px-8 flex items-center justify-between font-sans relative z-40">
+        <div className="flex items-center min-w-0 flex-1 mr-2 sm:mr-6 text-left">
+          {/* Mobile / Tablet Hamburger Toggle */}
+          <button
+            type="button"
+            onClick={toggleSidebar}
+            className="lg:hidden mr-2 sm:mr-3 p-2 -ml-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors shrink-0 focus:outline-hidden focus:ring-2 focus:ring-agrogreen-500"
+            aria-label="Open navigation menu"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+
+          <div className="min-w-0 flex-1">
+            <h1 className="text-base sm:text-xl md:text-2xl font-bold text-slate-800 tracking-tight truncate leading-tight">
+              {title || 'Mandi+ Dashboard'}
+            </h1>
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-0.5">
+              <p className="text-xs text-slate-400 whitespace-nowrap hidden md:inline-block">Mandi+ Portal • Smart Farming Marketplace</p>
+              <span className="h-1.5 w-1.5 rounded-full bg-slate-200 hidden md:inline-block"></span>
+              <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider flex items-center whitespace-nowrap">
+                Region: Maharashtra
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center space-x-3 sm:space-x-4">
+        <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
           <LanguageSelector />
 
           {/* Quick WhatsApp Chat Icon */}
           <Link
             to="/chat"
-            className="text-slate-400 hover:text-[#00a884] transition-colors p-2 rounded-xl hover:bg-emerald-50 relative"
+            className="text-slate-400 hover:text-[#00a884] transition-colors p-1.5 sm:p-2 rounded-xl hover:bg-emerald-50 relative"
             title="Open WhatsApp Web"
           >
             <MessageSquare className="h-5 w-5" />
@@ -82,10 +97,11 @@ export default function DashboardHeader({ title }) {
           <div className="relative" ref={dropdownRef}>
             <button 
               onClick={() => setShowNotifications(!showNotifications)}
-              className="relative text-slate-400 hover:text-slate-600 transition-colors p-2 rounded-xl hover:bg-slate-50"
+              className="relative text-slate-400 hover:text-slate-600 transition-colors p-1.5 sm:p-2 rounded-xl hover:bg-slate-50"
+              aria-label="View platform alerts"
             >
               {unreadCount > 0 && (
-                <span className="absolute top-1 right-1 h-4 min-w-4 px-1 rounded-full bg-rose-500 text-white text-[9px] font-black flex items-center justify-center ring-2 ring-white">
+                <span className="absolute top-0.5 right-0.5 sm:top-1 sm:right-1 h-4 min-w-4 px-1 rounded-full bg-rose-500 text-white text-[9px] font-black flex items-center justify-center ring-2 ring-white">
                   {unreadCount}
                 </span>
               )}
@@ -94,7 +110,7 @@ export default function DashboardHeader({ title }) {
 
             {/* Premium Glassmorphic Notification Dropdown */}
             {showNotifications && (
-              <div className="absolute right-0 mt-3 w-80 bg-white/95 backdrop-blur-md rounded-3xl border border-slate-100 shadow-xl py-3 z-50 text-left">
+              <div className="absolute right-0 mt-3 w-[calc(100vw-2rem)] max-w-xs sm:w-80 bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-slate-100 shadow-xl py-3 z-50 text-left">
                 <div className="px-4 py-2 border-b border-slate-100 flex items-center justify-between">
                   <span className="font-extrabold text-sm text-slate-800">Platform Alerts</span>
                   
@@ -136,15 +152,15 @@ export default function DashboardHeader({ title }) {
           </div>
 
           {/* Profile details */}
-          <Link to="/profile" className="flex items-center space-x-3.5 pl-4 border-l border-slate-100 hover:opacity-90 transition-opacity text-left">
+          <Link to="/profile" className="flex items-center space-x-2 sm:space-x-3.5 pl-2 sm:pl-4 border-l border-slate-100 hover:opacity-90 transition-opacity text-left">
             <div className="text-right hidden lg:block">
-              <h4 className="font-semibold text-sm text-slate-800">{user?.email.split('@')[0]}</h4>
-              <span className="text-xs text-agrogreen-600 font-semibold uppercase">{user?.role.replace(/_/g, ' ')}</span>
+              <h4 className="font-semibold text-sm text-slate-800">{user?.email?.split('@')[0]}</h4>
+              <span className="text-xs text-agrogreen-600 font-semibold uppercase">{user?.role?.replace(/_/g, ' ')}</span>
             </div>
             {user?.profilePhoto ? (
-              <img src={user.profilePhoto} alt="Profile" className="h-10 w-10 rounded-xl object-cover border border-slate-200" />
+              <img src={user.profilePhoto} alt="Profile" className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl object-cover border border-slate-200" />
             ) : (
-              <div className="h-10 w-10 rounded-xl bg-agrogreen-50 border border-agrogreen-100 flex items-center justify-center text-agrogreen-700">
+              <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-agrogreen-50 border border-agrogreen-100 flex items-center justify-center text-agrogreen-700">
                 <User className="h-5 w-5" />
               </div>
             )}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
+import { SidebarProvider } from './context/SidebarContext';
 import AppRoutes from './routes/AppRoutes';
 import WhatsAppChatWidget from './components/WhatsAppChatWidget';
 
@@ -87,8 +88,10 @@ export default function App() {
       <Router>
         <LanguageProvider>
           <AuthProvider>
-            <AppRoutes />
-            <WhatsAppChatWidget />
+            <SidebarProvider>
+              <AppRoutes />
+              <WhatsAppChatWidget />
+            </SidebarProvider>
           </AuthProvider>
         </LanguageProvider>
       </Router>

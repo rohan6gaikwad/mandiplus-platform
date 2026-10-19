@@ -76,10 +76,10 @@ export default function WhatsAppChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 font-sans select-none">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 font-sans select-none">
       {/* Expanded WhatsApp Mini Modal */}
       {isOpen && (
-        <div className="mb-4 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-slide-in flex flex-col">
+        <div className="mb-3 w-[calc(100vw-2rem)] max-w-sm sm:w-96 bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-slide-in flex flex-col max-h-[80vh]">
           {/* Header */}
           <div className="bg-[#00a884] p-4 text-white flex items-center justify-between shadow-md">
             <div className="flex items-center space-x-3 text-left">
@@ -214,8 +214,9 @@ export default function WhatsAppChatWidget() {
       {/* Floating Action WhatsApp Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative group h-14 w-14 rounded-full bg-[#25d366] hover:bg-[#20ba5a] text-white flex items-center justify-center shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 ring-4 ring-emerald-500/20"
+        className="relative group h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-[#25d366] hover:bg-[#20ba5a] text-white flex items-center justify-center shadow-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 ring-4 ring-emerald-500/20"
         title="Open WhatsApp Chat"
+        aria-label="Open WhatsApp live chat"
       >
         {/* Animated pulse ring if unread */}
         {unreadCount > 0 && (
@@ -225,9 +226,9 @@ export default function WhatsAppChatWidget() {
         {/* WhatsApp Icon */}
         <div className="relative">
           {isOpen ? (
-            <X className="h-7 w-7" />
+            <X className="h-6 w-6 sm:h-7 sm:w-7" />
           ) : (
-            <MessageSquare className="h-7 w-7 fill-white stroke-[#25d366]" />
+            <MessageSquare className="h-6 w-6 sm:h-7 sm:w-7 fill-white stroke-[#25d366]" />
           )}
         </div>
 

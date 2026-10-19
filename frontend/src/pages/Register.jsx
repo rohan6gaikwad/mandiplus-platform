@@ -275,7 +275,7 @@ export default function Register() {
 
         {/* Right Pane Form */}
         <div className="w-full md:w-1/2 flex items-center justify-center">
-          <div className="w-full bg-white rounded-[32px] p-8 sm:p-10 shadow-premium border border-slate-100 relative">
+          <div className="w-full bg-white rounded-[32px] p-5 sm:p-10 shadow-premium border border-slate-100 relative">
             
             <div className="flex justify-between items-center mb-8 text-xs font-bold uppercase tracking-wider text-slate-400">
                <div className="flex items-center space-x-2">
