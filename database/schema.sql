@@ -1,5 +1,5 @@
 -- Mandi+ Smart Agriculture Marketplace Database Schema
--- Developed by R Tech Solutions
+
 -- MySQL Dialect
 
 CREATE DATABASE IF NOT EXISTS mandiplus_db;
