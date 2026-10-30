@@ -55,6 +55,13 @@ public class GovMandiApiClient {
      * Fetches official Mandi records from data.gov.in API with filters and pagination.
      */
     public ApiResponse fetchMandiRecords(String state, String district, String commodity, int limit, int offset) {
+        return fetchMandiRecords(state, district, null, commodity, null, limit, offset);
+    }
+
+    /**
+     * Fetches official Mandi records from data.gov.in API with state, district, market, commodity, arrivalDate filters and pagination.
+     */
+    public ApiResponse fetchMandiRecords(String state, String district, String market, String commodity, String arrivalDate, int limit, int offset) {
         if (!isApiKeyConfigured()) {
             throw new IllegalStateException("Government API key is not configured. Please set the DATA_GOV_IN_API_KEY environment variable to enable data synchronization.");
         }
@@ -72,8 +79,14 @@ public class GovMandiApiClient {
         if (district != null && !district.trim().isEmpty()) {
             urlBuilder.append("&filters%5Bdistrict%5D=").append(URLEncoder.encode(district.trim(), StandardCharsets.UTF_8));
         }
+        if (market != null && !market.trim().isEmpty()) {
+            urlBuilder.append("&filters%5Bmarket%5D=").append(URLEncoder.encode(market.trim(), StandardCharsets.UTF_8));
+        }
         if (commodity != null && !commodity.trim().isEmpty()) {
             urlBuilder.append("&filters%5Bcommodity%5D=").append(URLEncoder.encode(commodity.trim(), StandardCharsets.UTF_8));
+        }
+        if (arrivalDate != null && !arrivalDate.trim().isEmpty()) {
+            urlBuilder.append("&filters%5Barrival_date%5D=").append(URLEncoder.encode(arrivalDate.trim(), StandardCharsets.UTF_8));
         }
 
         String targetUrl = urlBuilder.toString();

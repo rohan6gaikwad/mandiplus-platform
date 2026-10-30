@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useRef, useContext } from 'react';
 import api from '../services/api';
+import websocketService, { getWebSocketEndpoint } from '../services/websocketService';
 
 const AuthContext = createContext(null);
 
@@ -74,16 +75,43 @@ export const AuthProvider = ({ children }) => {
   const wsKey = user ? `${user.id}:${user.token}` : null;
 
   useEffect(() => {
-    if (!wsKey) {
+    if (!wsKey || !user) {
       setWsConnected(false);
+      websocketService.disconnect();
       return;
     }
 
-    const host = window.location.hostname || 'localhost';
-    const wsPort = import.meta.env.VITE_WS_PORT || '8082';
-    const wsUrl = `ws://${host}:${wsPort}/ws-mandiplus?userId=${user?.id || ''}`;
-    console.log('Connecting to WebSocket:', wsUrl);
+    // 1. Establish authenticated STOMP WebSocket for real-time chat & user presence
+    websocketService.connect(
+      user.token,
+      user,
+      () => setWsConnected(true),
+      () => setWsConnected(false)
+    );
 
+    // 2. Also maintain raw WebSocket connection for live market ticker & general broadcast alerts
+    const getRawWebSocketUrl = (userId) => {
+      if (import.meta.env.VITE_WS_URL) {
+        const base = import.meta.env.VITE_WS_URL.replace(/\/ws-chat$/, '').replace(/\/ws-mandiplus$/, '');
+        return `${base}/ws-mandiplus?userId=${userId || ''}`;
+      }
+      const apiUrl = import.meta.env.VITE_API_URL;
+      if (apiUrl && (apiUrl.startsWith('http://') || apiUrl.startsWith('https://'))) {
+        try {
+          const parsed = new URL(apiUrl);
+          const isSecure = parsed.protocol === 'https:';
+          const wsProto = isSecure ? 'wss:' : 'ws:';
+          return `${wsProto}//${parsed.host}/ws-mandiplus?userId=${userId || ''}`;
+        } catch (_) {}
+      }
+      const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+      const proto = isHttps ? 'wss:' : 'ws:';
+      const host = (typeof window !== 'undefined' && window.location.hostname) || 'localhost';
+      const port = import.meta.env.VITE_WS_PORT || '8082';
+      return `${proto}//${host}:${port}/ws-mandiplus?userId=${userId || ''}`;
+    };
+
+    const wsUrl = getRawWebSocketUrl(user.id);
     let socket;
     let reconnectTimer;
 
@@ -91,9 +119,7 @@ export const AuthProvider = ({ children }) => {
       try {
         socket = new WebSocket(wsUrl);
       } catch (e) {
-        console.error('Failed to construct WebSocket:', e);
-        // Mark online anyway — backend may not support WS in all envs
-        setWsConnected(true);
+        console.warn('Failed to construct Raw WebSocket:', e);
         return;
       }
 
@@ -195,6 +221,7 @@ export const AuthProvider = ({ children }) => {
     return () => {
       clearTimeout(reconnectTimer);
       if (socket) socket.close(1000);
+      websocketService.disconnect();
     };
   }, [wsKey]);
 
@@ -282,6 +309,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    websocketService.disconnect();
     localStorage.removeItem('mandiplus_user');
     setUser(null);
     setAlerts([]); // Clear previous user alerts on logout

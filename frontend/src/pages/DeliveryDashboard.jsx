@@ -12,7 +12,8 @@ import {
   CheckCircle2, AlertCircle, ShieldAlert, IndianRupee, 
   TrendingUp, Award, Zap, Compass, ChevronRight, Check,
   ToggleLeft, ToggleRight, ArrowUpRight, Star, RefreshCw, 
-  Send, ShieldCheck, HeartHandshake, Bell, Key, Package, Sparkles
+  Send, ShieldCheck, HeartHandshake, Bell, Key, Package, Sparkles,
+  X
 } from 'lucide-react';
 
 export default function DeliveryDashboard({ tab = 'dashboard' }) {

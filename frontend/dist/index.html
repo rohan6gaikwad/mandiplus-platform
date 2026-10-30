@@ -10,8 +10,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-DxULeKuH.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BUi9g8D8.css">
+
+    <!-- Global Polyfill for Vite/CommonJS packages (e.g. sockjs-client) -->
+    <script>
+      if (typeof window !== 'undefined' && typeof window.global === 'undefined') {
+        window.global = window;
+      }
+    </script>
+    <script type="module" crossorigin src="/assets/index-lk_nJ8K8.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CBwoVuAw.css">
   </head>
   <body class="bg-[#fafbfb] text-[#1e293b] font-sans antialiased selection:bg-agrogreen-100 selection:text-agrogreen-800">
     <div id="root"></div>

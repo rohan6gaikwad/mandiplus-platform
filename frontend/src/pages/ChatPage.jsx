@@ -10,9 +10,10 @@ import {
   Mic, MicOff, Play, Pause, RefreshCw, Info,
   Store, HelpCircle, PhoneCall, PhoneOff,
   Camera, Film, Music, FileText, Download,
-  Volume2, VolumeX, ShieldCheck
+  Volume2, VolumeX, ShieldCheck, Clock, AlertCircle, Wifi, WifiOff
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
+import websocketService from '../services/websocketService';
 
 export default function ChatPage() {
   const { user } = useAuth();
@@ -29,6 +30,8 @@ export default function ChatPage() {
   const [activeTab, setActiveTab] = useState('chats'); // 'chats' | 'contacts'
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [loadingConversations, setLoadingConversations] = useState(true);
+  const [onlineUserIds, setOnlineUserIds] = useState(new Set());
+  const [wsConnected, setWsConnected] = useState(true);
   
   // Popovers & Drawers
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -141,17 +144,64 @@ export default function ChatPage() {
       .finally(() => setLoadingHistory(false));
   }, [selectedPartner?.id]);
 
-  // Real-time WebSocket listener
+  // Online presence and WebSocket connection status listeners
+  useEffect(() => {
+    const handleOnlineStatus = (e) => {
+      const data = e.detail;
+      if (!data || !data.userId) return;
+
+      setOnlineUserIds(prev => {
+        const next = new Set(prev);
+        if (data.status === 'ONLINE') {
+          next.add(Number(data.userId));
+        } else {
+          next.delete(Number(data.userId));
+        }
+        return next;
+      });
+    };
+
+    const handleWsStatus = (e) => {
+      if (e.detail) {
+        setWsConnected(e.detail.connected);
+      }
+    };
+
+    window.addEventListener('mandiplus-online-status', handleOnlineStatus);
+    window.addEventListener('mandiplus-ws-status', handleWsStatus);
+
+    return () => {
+      window.removeEventListener('mandiplus-online-status', handleOnlineStatus);
+      window.removeEventListener('mandiplus-ws-status', handleWsStatus);
+    };
+  }, []);
+
+  // Real-time WebSocket / STOMP listener with deduplication & instant UI sync
   useEffect(() => {
     const handleIncomingMessage = (e) => {
       const msg = e.detail;
       if (!msg) return;
 
-      // If message is from or to the currently open chat partner
+      // If message is between the currently open chat partner and current user
       if (selectedPartner && (msg.senderId === selectedPartner.id || msg.receiverId === selectedPartner.id)) {
         setMessages(prev => {
+          // If already in list with matching DB id, skip
           if (prev.some(m => m.id === msg.id)) return prev;
-          return [...prev, msg];
+
+          // Check for pending optimistic message to replace with confirmed server message
+          const optimisticIdx = prev.findIndex(m => 
+            (m.status === 'SENDING' || String(m.id).startsWith('temp_')) && 
+            m.senderId === msg.senderId && 
+            m.content === msg.content
+          );
+
+          if (optimisticIdx >= 0) {
+            const updated = [...prev];
+            updated[optimisticIdx] = { ...msg, status: 'SENT' };
+            return updated;
+          }
+
+          return [...prev, { ...msg, status: 'SENT' }];
         });
         setTimeout(() => scrollToBottom('smooth'), 50);
 
@@ -178,7 +228,7 @@ export default function ChatPage() {
           lastMessageAt: msg.createdAt,
           lastMessageType: msg.messageType,
           unreadCount: (existingIdx >= 0 ? prev[existingIdx].unreadCount : 0) + (isCurrentActive || msg.senderId === user?.id ? 0 : 1),
-          isOnline: true
+          isOnline: onlineUserIds.has(partnerId) || (existingIdx >= 0 && prev[existingIdx].isOnline)
         };
 
         if (existingIdx >= 0) {
@@ -192,7 +242,7 @@ export default function ChatPage() {
 
     window.addEventListener('mandiplus-chat-message', handleIncomingMessage);
     return () => window.removeEventListener('mandiplus-chat-message', handleIncomingMessage);
-  }, [selectedPartner, user?.id]);
+  }, [selectedPartner, user?.id, onlineUserIds]);
 
   // Voice recording timer
   useEffect(() => {
@@ -269,7 +319,7 @@ export default function ChatPage() {
     }
   };
 
-  // SEND TEXT OR MEDIA MESSAGE
+  // SEND TEXT OR MEDIA MESSAGE (Real-time STOMP with REST Fallback)
   const handleSendMessage = async (customContent = null, customType = 'TEXT') => {
     const textToSend = customContent || messageText.trim();
     if (!textToSend || !selectedPartner) return;
@@ -278,9 +328,11 @@ export default function ChatPage() {
     setShowEmojiPicker(false);
     setShowAttachMenu(false);
 
-    // Optimistic UI push
+    const tempId = `temp_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+
+    // Optimistic UI push with 'SENDING' state
     const optimisticMessage = {
-      id: Date.now(),
+      id: tempId,
       senderId: user.id,
       senderEmail: user.email,
       senderName: user.name || user.email.split('@')[0],
@@ -292,24 +344,39 @@ export default function ChatPage() {
       content: textToSend,
       messageType: customType,
       createdAt: new Date().toISOString(),
-      isRead: false
+      isRead: false,
+      status: 'SENDING'
     };
 
     setMessages(prev => [...prev, optimisticMessage]);
     setTimeout(() => scrollToBottom('smooth'), 50);
 
     try {
-      const res = await api.post('/chat/send', {
-        receiverId: selectedPartner.id,
-        content: textToSend,
-        messageType: customType
-      });
+      // 1. Send via STOMP if connected
+      let sentViaStomp = false;
+      if (websocketService.isConnected()) {
+        sentViaStomp = websocketService.send('/app/chat.send', {
+          receiverId: selectedPartner.id,
+          content: textToSend,
+          messageType: customType
+        });
+      }
 
-      if (res.data) {
-        setMessages(prev => prev.map(m => m.id === optimisticMessage.id ? res.data : m));
+      // 2. If STOMP not connected or failed, send via REST API (which also broadcasts over STOMP)
+      if (!sentViaStomp) {
+        const res = await api.post('/chat/send', {
+          receiverId: selectedPartner.id,
+          content: textToSend,
+          messageType: customType
+        });
+
+        if (res.data) {
+          setMessages(prev => prev.map(m => m.id === tempId ? { ...res.data, status: 'SENT' } : m));
+        }
       }
     } catch (err) {
       console.error('Failed to send message:', err);
+      setMessages(prev => prev.map(m => m.id === tempId ? { ...m, status: 'FAILED' } : m));
     }
   };
 
@@ -776,7 +843,7 @@ export default function ChatPage() {
                         isSelected ? 'bg-[#f0f2f5]' : 'hover:bg-[#f5f6f6]'
                       }`}
                     >
-                      {/* Avatar */}
+                      {/* Avatar with Presence Indicator */}
                       <div className="relative shrink-0">
                         {conv.partnerProfilePhoto || conv.partnerPhoto ? (
                           <img src={conv.partnerProfilePhoto || conv.partnerPhoto} alt="Avatar" className="h-12 w-12 rounded-full object-cover" />
@@ -789,7 +856,9 @@ export default function ChatPage() {
                             {(conv.partnerName || 'User').charAt(0).toUpperCase()}
                           </div>
                         )}
-                        <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-[#25d366] ring-2 ring-white"></span>
+                        <span className={`absolute bottom-0 right-0 h-3 w-3 rounded-full ring-2 ring-white ${
+                          onlineUserIds.has(Number(conv.partnerId)) || conv.isOnline ? 'bg-[#25d366]' : 'bg-slate-300'
+                        }`}></span>
                       </div>
 
                       {/* Info & Last snippet */}
@@ -900,7 +969,9 @@ export default function ChatPage() {
                         {(selectedPartner.name || 'User').charAt(0).toUpperCase()}
                       </div>
                     )}
-                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-[#25d366] ring-2 ring-white"></span>
+                    <span className={`absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full ring-2 ring-white ${
+                      onlineUserIds.has(Number(selectedPartner.id)) || selectedPartner.isOnline ? 'bg-[#25d366]' : 'bg-slate-400'
+                    }`}></span>
                   </div>
 
                   {/* Partner Name & Live Status */}
@@ -912,9 +983,16 @@ export default function ChatPage() {
                       <span className="truncate max-w-[200px] sm:max-w-[320px]">{selectedPartner.name}</span>
                       {getRoleBadge(selectedPartner.role)}
                     </h3>
-                    <p className="text-[11px] text-[#00a884] font-medium leading-none mt-1">
-                      online
-                    </p>
+                    {(onlineUserIds.has(Number(selectedPartner.id)) || selectedPartner.isOnline) ? (
+                      <p className="text-[11px] text-[#00a884] font-medium leading-none mt-1 flex items-center space-x-1">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#25d366] animate-pulse"></span>
+                        <span>online</span>
+                      </p>
+                    ) : (
+                      <p className="text-[11px] text-[#667781] font-medium leading-none mt-1">
+                        offline
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -943,6 +1021,14 @@ export default function ChatPage() {
                   </button>
                 </div>
               </div>
+
+              {/* Offline / Reconnect Banner */}
+              {!wsConnected && (
+                <div className="bg-amber-500 text-white text-xs px-3 py-1.5 flex items-center justify-center space-x-2 shadow-sm font-semibold animate-pulse z-20">
+                  <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                  <span>Real-time connection interrupted. Reconnecting automatically...</span>
+                </div>
+              )}
 
               {/* WHATSAPP CHAT CANVAS: Authentic Doodle Background & Bubbles */}
               <div 
@@ -1087,13 +1173,34 @@ export default function ChatPage() {
                             <p className="break-words whitespace-pre-wrap px-1.5 pt-0.5">{msg.content}</p>
                           )}
 
-                          {/* Message Footer: Timestamp + Blue Double Checks */}
+                          {/* Message Footer: Timestamp + Status Indicators (Sending, Sent, Read, Failed) */}
                           <div className="flex items-center justify-end space-x-1 mt-1 text-[11px] text-[#667781] select-none pr-1">
                             <span>{formatTime(msg.createdAt)}</span>
                             {isMe && (
-                              <span className={msg.isRead ? 'text-[#53bdeb]' : 'text-[#8696a0]'}>
-                                <CheckCheck className="h-3.5 w-3.5" />
-                              </span>
+                              <>
+                                {msg.status === 'SENDING' ? (
+                                  <span className="text-slate-400" title="Sending...">
+                                    <Clock className="h-3 w-3 animate-spin" />
+                                  </span>
+                                ) : msg.status === 'FAILED' ? (
+                                  <button
+                                    onClick={() => handleSendMessage(msg.content, msg.messageType)}
+                                    className="text-rose-500 hover:text-rose-700 flex items-center space-x-0.5"
+                                    title="Failed to send. Click to retry"
+                                  >
+                                    <AlertCircle className="h-3 w-3" />
+                                    <span className="text-[10px] underline">Retry</span>
+                                  </button>
+                                ) : msg.isRead ? (
+                                  <span className="text-[#53bdeb]" title="Read">
+                                    <CheckCheck className="h-3.5 w-3.5" />
+                                  </span>
+                                ) : (
+                                  <span className="text-[#8696a0]" title="Delivered">
+                                    <CheckCheck className="h-3.5 w-3.5" />
+                                  </span>
+                                )}
+                              </>
                             )}
                           </div>
                         </div>

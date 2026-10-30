@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @Service
 public class ChatService {
@@ -44,6 +45,12 @@ public class ChatService {
     @Autowired
     private LiveFeedWebSocketHandler webSocketHandler;
 
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
+    private UserOnlineStatusService onlineStatusService;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Transactional
@@ -63,17 +70,33 @@ public class ChatService {
 
         ChatMessageDTO dto = toDTO(saved);
 
-        // Send real-time notification over WebSocket to both receiver and sender
+        // Send real-time notification over STOMP and raw WebSocket
         try {
-            Map<String, Object> wsPayload = new HashMap<>();
-            wsPayload.put("type", "CHAT_MESSAGE");
-            wsPayload.put("message", dto);
-            String json = objectMapper.writeValueAsString(wsPayload);
+            // 1. STOMP delivery
+            if (messagingTemplate != null) {
+                if (receiver.getEmail() != null) {
+                    messagingTemplate.convertAndSendToUser(receiver.getEmail(), "/queue/messages", dto);
+                }
+                messagingTemplate.convertAndSend("/topic/messages." + receiver.getId(), dto);
 
-            webSocketHandler.sendToUser(receiver.getId(), json);
-            webSocketHandler.sendToUser(sender.getId(), json);
+                if (sender.getEmail() != null) {
+                    messagingTemplate.convertAndSendToUser(sender.getEmail(), "/queue/messages", dto);
+                }
+                messagingTemplate.convertAndSend("/topic/messages." + sender.getId(), dto);
+            }
+
+            // 2. Raw WebSocket fallback broadcast
+            if (webSocketHandler != null) {
+                Map<String, Object> wsPayload = new HashMap<>();
+                wsPayload.put("type", "CHAT_MESSAGE");
+                wsPayload.put("message", dto);
+                String json = objectMapper.writeValueAsString(wsPayload);
+
+                webSocketHandler.sendToUser(receiver.getId(), json);
+                webSocketHandler.sendToUser(sender.getId(), json);
+            }
         } catch (Exception e) {
-            System.err.println("Failed to broadcast chat WebSocket message: " + e.getMessage());
+            System.err.println("Failed to broadcast chat message via WebSocket/STOMP: " + e.getMessage());
         }
 
         return dto;
@@ -173,7 +196,7 @@ public class ChatService {
 
             Long unread = chatMessageRepository.countUnreadFromSender(partner.getId(), currentUserId);
             conv.setUnreadCount(unread != null ? unread : 0L);
-            conv.setIsOnline(true); // Active on platform
+            conv.setIsOnline(onlineStatusService.isUserOnline(partner.getId()));
 
             conversations.add(conv);
         }
@@ -212,7 +235,7 @@ public class ChatService {
                 dto.setProfilePhoto(u.getProfilePhoto());
                 dto.setName(resolveDisplayName(u));
                 dto.setSubtitle(resolveSubtitle(u));
-                dto.setIsOnline(true);
+                dto.setIsOnline(onlineStatusService.isUserOnline(u.getId()));
                 contacts.add(dto);
             }
 
@@ -232,7 +255,7 @@ public class ChatService {
                 dto.setProfilePhoto(admin.getProfilePhoto());
                 dto.setName("Mandi+ Admin Support");
                 dto.setSubtitle("Official Platform Helpdesk & Moderation");
-                dto.setIsOnline(true);
+                dto.setIsOnline(onlineStatusService.isUserOnline(admin.getId()));
                 contacts.add(dto);
             }
         }

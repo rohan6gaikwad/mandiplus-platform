@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import DashboardHeader from '../components/DashboardHeader';
+import GovernmentMandiHistoricalView from '../components/GovernmentMandiHistoricalView';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { 
   TrendingUp, TrendingDown, Minus, HelpCircle, ShieldCheck, 
   MapPin, Calendar, Clock, RefreshCw, AlertTriangle, Info, 
   ArrowUpRight, ArrowDownRight, CheckCircle2, ChevronRight,
-  Filter, Sparkles, Building2, Scale, ExternalLink
+  Filter, Sparkles, Building2, Scale, ExternalLink, History
 } from 'lucide-react';
 
 const DEFAULT_COMMODITIES = [
@@ -38,6 +40,14 @@ const DEFAULT_MARKETS_BY_DISTRICT = {
 
 export default function FarmerMandiRates() {
   const { user } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialTab = searchParams.get('tab') === 'historical' ? 'historical' : 'spot';
+  const [activeMainTab, setActiveMainTab] = useState(initialTab);
+
+  const handleTabChange = (tabId) => {
+    setActiveMainTab(tabId);
+    setSearchParams(tabId === 'historical' ? { tab: 'historical' } : {});
+  };
 
   // Filters pre-populated so UI never gets stuck on "Loading commodities..."
   const [filterOptions, setFilterOptions] = useState({
@@ -307,6 +317,44 @@ export default function FarmerMandiRates() {
               </div>
             </div>
           </div>
+
+          {/* Primary View Tab Switcher */}
+          <div className="flex items-center gap-2 sm:gap-3 border-b border-slate-200 pb-2">
+            <button
+              type="button"
+              onClick={() => handleTabChange('spot')}
+              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+                activeMainTab === 'spot'
+                  ? 'bg-emerald-700 text-white shadow-md'
+                  : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 hover:bg-slate-50'
+              }`}
+            >
+              <TrendingUp className="w-4 h-4" />
+              <span>Live Spot Rates & Selling Advice</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleTabChange('historical')}
+              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+                activeMainTab === 'historical'
+                  ? 'bg-emerald-700 text-white shadow-md'
+                  : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 hover:bg-slate-50'
+              }`}
+            >
+              <History className="w-4 h-4" />
+              <span>Historical Trends & Agmarknet Analytics</span>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-extrabold ${
+                activeMainTab === 'historical' ? 'bg-emerald-900 text-emerald-200' : 'bg-emerald-100 text-emerald-800'
+              }`}>
+                data.gov.in
+              </span>
+            </button>
+          </div>
+
+          {/* TAB 1: SPOT ADVICE & NEARBY MANDIS */}
+          {activeMainTab === 'spot' && (
+            <>
 
           {/* Active Government Advisories Alerts */}
           {advisories.length > 0 && (
@@ -777,6 +825,17 @@ export default function FarmerMandiRates() {
               </div>
             )}
           </div>
+            </>
+          )}
+
+          {/* TAB 2: HISTORICAL AGMARKNET ANALYTICS */}
+          {activeMainTab === 'historical' && (
+            <GovernmentMandiHistoricalView
+              initialCommodity={selectedCommodity}
+              initialDistrict={selectedDistrict}
+              initialMarket={selectedMarket}
+            />
+          )}
 
           {/* Educational Callout on Price Integrity */}
           <div className="bg-slate-900 text-slate-200 rounded-3xl p-6 sm:p-7 border border-slate-800 space-y-3">

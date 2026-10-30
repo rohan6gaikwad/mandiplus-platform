@@ -23,6 +23,26 @@ import ProfilePage from '../pages/ProfilePage';
 import ChatPage from '../pages/ChatPage';
 import FarmerMandiRates from '../pages/FarmerMandiRates';
 import AdminMandiManagement from '../pages/AdminMandiManagement';
+import { useAuth } from '../context/AuthContext';
+
+function RoleDashboardRedirect() {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  switch (user.role) {
+    case 'FARMER':
+      return <Navigate to="/farmer" replace />;
+    case 'BUYER':
+      return <Navigate to="/buyer" replace />;
+    case 'COLD_STORAGE_MANAGER':
+      return <Navigate to="/storage" replace />;
+    case 'ADMIN':
+      return <Navigate to="/admin" replace />;
+    case 'DELIVERY_PARTNER':
+      return <Navigate to="/delivery" replace />;
+    default:
+      return <Navigate to="/" replace />;
+  }
+}
 
 export default function AppRoutes() {
   return (
@@ -35,6 +55,14 @@ export default function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/setup-profile" element={<SetupProfile />} />
+      <Route 
+        path="/dashboard" 
+        element={
+          <ProtectedRoute allowedRoles={['FARMER', 'BUYER', 'COLD_STORAGE_MANAGER', 'ADMIN', 'DELIVERY_PARTNER']}>
+            <RoleDashboardRedirect />
+          </ProtectedRoute>
+        } 
+      />
       <Route 
         path="/schemes" 
         element={

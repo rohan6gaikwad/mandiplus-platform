@@ -7,52 +7,12 @@ import api from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import ComplaintsDesk from '../components/ComplaintsDesk';
+import { BILINGUAL_CROP_SUGGESTIONS as CROP_SUGGESTIONS, formatCropDisplayName } from '../utils/cropNames';
 import { 
   Plus, CheckCircle, Clock, ShoppingBag, 
   IndianRupee, Leaf, Warehouse, Calendar, ArrowRight, ShieldCheck,
   Edit3, Trash2, User, AlertCircle, XCircle, Info
 } from 'lucide-react';
-
-const CROP_SUGGESTIONS = [
-  "Apple",
-  "Banana",
-  "Beetroot",
-  "Brinjal (Eggplant)",
-  "Cabbage",
-  "Carrot",
-  "Cauliflower",
-  "Chickpeas",
-  "Chili (Red/Green)",
-  "Coconut",
-  "Coriander",
-  "Cotton",
-  "Cucumber",
-  "Garlic",
-  "Ginger",
-  "Grapes",
-  "Groundnut",
-  "Guava",
-  "Lemon",
-  "Maize",
-  "Mango",
-  "Mustard",
-  "Okra (Bhindi)",
-  "Onion",
-  "Orange",
-  "Papaya",
-  "Pineapple",
-  "Pomegranate",
-  "Potato",
-  "Rice (Paddy)",
-  "Soybean",
-  "Spinach",
-  "Strawberry",
-  "Sugarcane",
-  "Tomato",
-  "Turmeric",
-  "Watermelon",
-  "Wheat"
-];
 
 export default function FarmerDashboard({ tab = 'dashboard' }) {
   const { t } = useLanguage();
@@ -384,7 +344,7 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
                         {orders.slice(0, 5).map((order) => (
                           <tr key={order.id} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/40">
                             <td className="px-4 sm:px-6 py-4 font-bold text-slate-800">#AGR-{order.id}</td>
-                            <td className="px-4 sm:px-6 py-4">{order.cropName} ({order.variety})</td>
+                            <td className="px-4 sm:px-6 py-4">{formatCropDisplayName(order.cropName)} ({order.variety})</td>
                             <td className="px-4 sm:px-6 py-4 font-semibold text-slate-800">{(order.quantityQuintals * 100).toLocaleString('en-IN')} kg <span className="text-slate-400 font-normal text-xs">({order.quantityQuintals} qtl)</span></td>
                             <td className="px-4 sm:px-6 py-4 font-semibold text-slate-800">₹{order.totalPrice.toLocaleString('en-IN')}</td>
                             <td className="px-4 sm:px-6 py-4">{order.buyerCompanyName}</td>
@@ -694,7 +654,7 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
 
                                   <div className="space-y-1 min-w-0 flex-1">
                                     <div className="flex flex-wrap items-center gap-2">
-                                      <span className="font-extrabold text-slate-850 text-sm truncate">{product.cropName}</span>
+                                      <span className="font-extrabold text-slate-850 text-sm truncate">{formatCropDisplayName(product.cropName)}</span>
                                       <span className="text-[10px] bg-slate-100 font-bold px-2 py-0.5 rounded-md text-slate-600 uppercase tracking-wider">
                                         {product.variety}
                                       </span>
@@ -825,7 +785,7 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
                             </span>
                           )}
                         </div>
-                        <h4 className="font-bold text-slate-700">{order.cropName} ({order.variety})</h4>
+                        <h4 className="font-bold text-slate-700">{formatCropDisplayName(order.cropName)} ({order.variety})</h4>
                         <div className="flex items-center space-x-2 text-xs text-slate-400 py-1">
                           {order.buyerProfilePhoto ? (
                             <img 
@@ -937,7 +897,7 @@ export default function FarmerDashboard({ tab = 'dashboard' }) {
                       {orders.filter(o => o.status === 'DELIVERED').map((order) => (
                         <tr key={order.id} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/50">
                           <td className="px-4 sm:px-6 py-4 font-bold text-slate-700">#TXN-AGR-{order.id}</td>
-                          <td className="px-4 sm:px-6 py-4">{order.cropName} ({order.variety})</td>
+                          <td className="px-4 sm:px-6 py-4">{formatCropDisplayName(order.cropName)} ({order.variety})</td>
                           <td className="px-4 sm:px-6 py-4 font-semibold text-slate-800">{(order.quantityQuintals * 100).toLocaleString('en-IN')} kg <span className="text-slate-400 font-normal text-xs">({order.quantityQuintals} qtl)</span></td>
                           <td className="px-4 sm:px-6 py-4 font-extrabold text-slate-800 text-right">₹{order.totalPrice.toLocaleString('en-IN')}</td>
                         </tr>

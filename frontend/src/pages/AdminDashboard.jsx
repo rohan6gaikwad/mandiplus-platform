@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar';
 import DashboardHeader from '../components/DashboardHeader';
 import api from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
+import { formatCropDisplayName } from '../utils/cropNames';
 import { 
   Users, User, ShoppingBag, Leaf, ShieldAlert, 
   IndianRupee, ToggleLeft, ToggleRight, Trash2, CheckCircle2, Plus,
@@ -720,7 +721,7 @@ export default function AdminDashboard({ tab = 'dashboard' }) {
                                 <td className="px-5 py-4">
                                   <div className="space-y-1">
                                     <div className="flex items-center space-x-2">
-                                      <span className="font-extrabold text-slate-800 text-sm">{prod.cropName}</span>
+                                      <span className="font-extrabold text-slate-800 text-sm">{formatCropDisplayName(prod.cropName)}</span>
                                       <span className="text-[10px] bg-slate-100 font-bold px-2 py-0.5 rounded text-slate-500 uppercase">
                                         {prod.variety}
                                       </span>

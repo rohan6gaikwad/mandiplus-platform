@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { splitCropName, formatCropDisplayName } from '../utils/cropNames';
 import {
   X, Heart, ShoppingCart, MapPin, User, Package,
   Leaf, TrendingUp, Clock, ChevronRight, ShoppingBag, Zap,
@@ -119,7 +120,14 @@ export default function ProductDetailModal({
               
               {/* Product Title (Mobile Only) */}
               <div className="lg:hidden text-left space-y-0.5">
-                <h2 className="text-2xl font-black text-slate-800 tracking-tight leading-tight">{product.cropName}</h2>
+                <h2 className="text-2xl font-black text-slate-800 tracking-tight leading-tight flex flex-wrap items-baseline gap-2">
+                  <span>{splitCropName(product.cropName).english}</span>
+                  {splitCropName(product.cropName).marathi && (
+                    <span className="text-base font-bold text-agrogreen-700 font-sans">
+                      ({splitCropName(product.cropName).marathi})
+                    </span>
+                  )}
+                </h2>
                 <p className="text-xs text-slate-500 font-semibold">{product.variety}</p>
               </div>
 
@@ -211,7 +219,14 @@ export default function ProductDetailModal({
 
               {/* Product Title (Desktop Only) */}
               <div className="hidden lg:block">
-                <h2 className="text-3xl font-black text-slate-800 tracking-tight leading-tight">{product.cropName}</h2>
+                <h2 className="text-3xl font-black text-slate-800 tracking-tight leading-tight flex flex-wrap items-baseline gap-2">
+                  <span>{splitCropName(product.cropName).english}</span>
+                  {splitCropName(product.cropName).marathi && (
+                    <span className="text-xl font-bold text-agrogreen-700 font-sans">
+                      ({splitCropName(product.cropName).marathi})
+                    </span>
+                  )}
+                </h2>
                 <p className="text-sm text-slate-500 font-semibold mt-1">{product.variety}</p>
               </div>
 

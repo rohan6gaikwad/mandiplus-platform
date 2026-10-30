@@ -8,6 +8,7 @@ import ComplaintsDesk from '../components/ComplaintsDesk';
 import ProductDetailModal from '../components/ProductDetailModal';
 import CheckoutFlowModal from '../components/CheckoutFlowModal';
 import LiveDeliveryMapModal from '../components/LiveDeliveryMapModal';
+import { splitCropName, formatCropDisplayName } from '../utils/cropNames';
 import {
   Search, MapPin, ShoppingBag, Heart,
   CheckCircle2, ChevronRight, MessageCircle, ShoppingCart, Trash2, Eye, Package, User,
@@ -21,7 +22,9 @@ const getCategoryFromName = (name) => {
     'spinach', 'palak', 'okra', 'bhindi', 'lady finger', 'brinjal', 'baingan', 'eggplant',
     'chilli', 'chili', 'capsicum', 'pepper', 'peas', 'matar', 'bitter gourd', 'karela',
     'bottle gourd', 'lauki', 'cucumber', 'kheera', 'beetroot', 'radish', 'mooli',
-    'drumstick', 'moringa', 'shevga', 'sweet potato', 'methi', 'fenugreek', 'veg'
+    'drumstick', 'moringa', 'shevga', 'sweet potato', 'methi', 'fenugreek', 'veg',
+    'कांदा', 'टोमॅटो', 'बटाटा', 'लसूण', 'आले', 'मिरची', 'फ्लॉवर', 'कोबी', 'गाजर', 'पालक',
+    'भेंडी', 'वांगी', 'ढोबळी', 'मटार', 'कारले', 'भोपळा', 'काकडी', 'बीट', 'मुळा', 'शेवगा', 'रताळे', 'मेथी'
   ];
   if (vegList.some(v => n.includes(v))) return 'VEGETABLES';
 
@@ -29,7 +32,9 @@ const getCategoryFromName = (name) => {
     'mango', 'banana', 'grapes', 'grape', 'pomegranate', 'papaya', 'orange', 'santra',
     'mosambi', 'sweet lime', 'guava', 'amrud', 'watermelon', 'muskmelon', 'kharbuj', 'cantaloupe',
     'apple', 'sitaphal', 'custard apple', 'strawberry', 'chikoo', 'sapota', 'lemon', 'lime',
-    'nimbu', 'pineapple', 'coconut', 'fruit'
+    'nimbu', 'pineapple', 'coconut', 'fruit',
+    'आंबा', 'द्राक्षे', 'केळी', 'डाळिंब', 'पपई', 'संत्रे', 'मोसंबी', 'पेरू', 'कलिंगड',
+    'खरबूज', 'सफरचंद', 'सीताफळ', 'स्ट्रॉबेरी', 'चिकू', 'लिंबू', 'अननस', 'नारळ'
   ];
   if (fruitList.some(v => n.includes(v))) return 'FRUITS';
 
@@ -460,14 +465,23 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                         {/* Card body */}
                         <div className="p-3 flex flex-col flex-1 space-y-2">
                           <div>
-                            <div className="flex items-center justify-between gap-1">
-                              <h4 className="font-extrabold text-slate-800 text-sm leading-tight truncate">{product.cropName}</h4>
+                            <div className="flex items-start justify-between gap-1">
+                              <div className="min-w-0 flex-1">
+                                <h4 className="font-black text-slate-900 text-sm leading-tight truncate flex items-baseline gap-1.5" title={formatCropDisplayName(product.cropName)}>
+                                  <span>{splitCropName(product.cropName).english}</span>
+                                  {splitCropName(product.cropName).marathi && (
+                                    <span className="text-xs font-bold text-agrogreen-700 font-sans tracking-wide">
+                                      ({splitCropName(product.cropName).marathi})
+                                    </span>
+                                  )}
+                                </h4>
+                                <span className="text-[10px] text-slate-400 font-semibold truncate block mt-0.5">{product.variety}</span>
+                              </div>
                               <span className="shrink-0 inline-flex items-center space-x-0.5 text-[9px] font-black text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">
                                 <Zap className="h-2.5 w-2.5 fill-amber-400 text-amber-500" />
                                 <span>15 MINS</span>
                               </span>
                             </div>
-                            <span className="text-[10px] text-slate-400 font-semibold truncate block">{product.variety}</span>
                           </div>
 
                           <div className="flex items-end justify-between">
@@ -621,7 +635,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                             </span>
                           )}
                         </div>
-                        <h4 className="font-bold text-slate-700 text-sm">{order.cropName} ({order.variety})</h4>
+                        <h4 className="font-bold text-slate-700 text-sm">{formatCropDisplayName(order.cropName)} ({order.variety})</h4>
                         <div className="flex items-center space-x-2 text-xs text-slate-400 py-1">
                           {order.farmerProfilePhoto ? (
                             <img 
@@ -713,7 +727,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                     return (
                       <div key={product.id} className="p-3.5 sm:p-4 border border-slate-100 rounded-2xl flex items-center justify-between hover:shadow-sm transition-all">
                         <div className="min-w-0 space-y-0.5">
-                          <h4 className="font-extrabold text-slate-800 text-sm truncate">{product.cropName}</h4>
+                          <h4 className="font-extrabold text-slate-800 text-sm truncate">{formatCropDisplayName(product.cropName)}</h4>
                           <span className="text-[10px] text-slate-400 font-semibold block">{product.variety} · {product.location}</span>
                           <span className="text-sm font-black text-slate-800">₹{(product.pricePerQuintal / 100).toFixed(2)}/kg</span>
                         </div>
@@ -867,7 +881,7 @@ export default function BuyerDashboard({ tab = 'shop' }) {
                                   </span>
                                 </div>
                                 <div className="space-y-0.5 min-w-0">
-                                  <h4 className="font-extrabold text-slate-800 text-sm leading-snug truncate">{item.cropName}</h4>
+                                  <h4 className="font-extrabold text-slate-800 text-sm leading-snug truncate">{formatCropDisplayName(item.cropName)}</h4>
                                   <span className="text-[11px] text-slate-400 font-semibold uppercase block">{item.variety}</span>
                                   <span className="text-xs text-slate-500 font-medium block truncate">{item.farmerName} · {item.location}</span>
                                   <div className="flex items-baseline space-x-2 pt-0.5">

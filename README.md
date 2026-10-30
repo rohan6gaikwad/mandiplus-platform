@@ -290,7 +290,22 @@ npm run dev
 
 ---
 
+## 🔑 Default Evaluation Accounts
 
+The initial seed data in `database/data.sql` configures demonstration accounts for evaluators:
+
+| Role | Email / Username | Default Password | Capabilities |
+| :--- | :--- | :--- | :--- |
+| **Platform Administrator** | `admin@gmail.com` | `admin@gmail.com` | Global metrics, crop moderation, Mandi desk, user governance |
+| **Farmer** | `farmer@mandiplus.com` | `password123` | Produce listing, order fulfillment, cold storage leasing |
+| **Commercial Buyer** | `buyer@mandiplus.com` | `password123` | Marketplace browsing, cart, Razorpay & COD checkout |
+| **Delivery Partner** | `delivery@mandiplus.com` | `password123` | Quick-commerce dispatch radar, OTP delivery workflow |
+| **Cold Storage Manager** | `storage@mandiplus.com` | `password123` | Warehouse space management, booking approvals |
+
+> [!NOTE]
+> For production environments, all default passwords should be updated immediately via the user profile settings or database update.
+
+---
 
 ## 🛡️ Git & GitHub Publishing Safety
 
@@ -326,3 +341,5 @@ Before publishing this repository to GitHub or any public remote:
 * **Sanjana Bagul** — Co-Founder & Product Strategist
 
 ---
+
+

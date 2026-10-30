@@ -227,7 +227,15 @@ export default function AdminMandiManagement() {
                   className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-2.5 rounded-2xl text-xs sm:text-sm transition-all shadow-md active:scale-95"
                 >
                   <Eye className="w-4 h-4" />
-                  <span>View Farmer Interface</span>
+                  <span>View Spot Rates</span>
+                </Link>
+
+                <Link
+                  to="/farmer/mandi-rates?tab=historical"
+                  className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2.5 rounded-2xl text-xs sm:text-sm transition-all shadow-md active:scale-95"
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  <span>Historical Analytics</span>
                 </Link>
 
                 <button
